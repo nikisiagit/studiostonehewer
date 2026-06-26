@@ -13,6 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
   });
 
+  // Fade out hero nav on scroll
+  const heroNav = document.querySelector('.hero-nav');
+  window.addEventListener('scroll', () => {
+    if (heroNav) {
+      const scrollPos = window.scrollY;
+      const opacity = Math.max(0, 1 - (scrollPos / 300));
+      heroNav.style.opacity = opacity;
+      heroNav.style.pointerEvents = opacity === 0 ? 'none' : 'auto';
+    }
+  });
+
   // Nav Scroll Effect
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
