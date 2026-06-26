@@ -13,14 +13,30 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
   });
 
-  // Fade out hero nav on scroll
+  // Fade out hero nav on scroll down, fade in on scroll up
   const heroNav = document.querySelector('.hero-nav');
+  let lastScrollY = window.scrollY;
+
   window.addEventListener('scroll', () => {
     if (heroNav) {
-      const scrollPos = window.scrollY;
-      const opacity = Math.max(0, 1 - (scrollPos / 300));
-      heroNav.style.opacity = opacity;
-      heroNav.style.pointerEvents = opacity === 0 ? 'none' : 'auto';
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY < 50) {
+        // At top
+        heroNav.classList.remove('hidden');
+        heroNav.classList.remove('scrolling-up');
+        heroNav.style.opacity = 1;
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        heroNav.classList.add('hidden');
+        heroNav.classList.remove('scrolling-up');
+      } else {
+        // Scrolling up
+        heroNav.classList.remove('hidden');
+        heroNav.classList.add('scrolling-up');
+        heroNav.style.opacity = 1;
+      }
+      lastScrollY = currentScrollY;
     }
   });
 
