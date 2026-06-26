@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amsterdam Pied-à-terre | Studio Stonehewer</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <div class="cursor"></div>
+
+  
+  <nav class="navbar" style="position: sticky; background-color: var(--color-bg);">
+    <a href="/" class="nav-brand">
+      <img src="/assets/images/stonehewer_logo_1782489923950.png" alt="Studio Stonehewer Logo" class="nav-logo" style="filter: none; mix-blend-mode: normal; height: 35px;">
+      STUDIO STONEHEWER
+    </a>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <div class="nav-links">
+      <a href="/#projects">PROJECTS</a>
+      <a href="/#studio">STUDIO</a>
+      <a href="/#about">ABOUT</a>
+      <a href="/#contact">CONTACT</a>
+    </div>
+  </nav>
+  
+
+    <header class="project-header container reveal">
+    <h4 class="section-subtitle">PROJECTS / VIRTUAL DESIGN</h4>
+    <h1 class="project-title">Amsterdam Pied-à-terre</h1>
+    <p class="project-meta">VIRTUAL DESIGN • RESIDENTIAL • 2023</p>
+    <div class="project-header-img-wrap">
+      <img src="assets/images/project3.jpg" alt="Amsterdam Pied-à-terre" class="project-header-img">
+    </div>
+    <div class="project-intro-text">
+      <p>A virtual design study for a 1920s west-side apartment with neutral but bold base tones, vintage flair, and living and dining spaces designed as separate but twinned retreats.</p>
+      <p>Using our digital studio process, we developed comprehensive moodboards, spatial planning, and realistic 3D renderings to guide the client's execution.</p>
+    </div>
+  </header>
+
+  <section class="project-gallery container reveal">
+    <div class="masonry-grid single-column">
+      <img src="assets/images/moodboard_1_1782490908858.png" class="masonry-item full">
+      <img src="assets/images/floorplan_1_1782490917458.png" class="masonry-item full">
+      <img src="assets/images/project2.jpg" class="masonry-item full">
+    </div>
+  </section>
+
+  <section class="next-project reveal">
+    <div class="container text-center">
+      <h4 class="section-subtitle">NEXT PROJECT</h4>
+      <a href="oud-west.html" class="next-project-link">
+        <h2 class="section-title">Amsterdam Oud-West</h2>
+        <img src="assets/images/project1.jpg" alt="Next Project">
+      </a>
+    </div>
+  </section>
+
+
+
+
+  <!-- Footer -->
+  <footer class="footer-section reveal">
+    <div class="container">
+      <h3 class="footer-title">Studio Stonehewer</h3>
+      <p class="footer-desc">Interior design rooted in curated and expressive moments to tell the stories of your home.</p>
+      <div class="footer-contact">
+        <a href="mailto:studiostonehewer@gmail.com">STUDIOSTONEHEWER@GMAIL.COM</a>
+        <a href="#">INSTAGRAM</a>
+      </div>
+      <div class="footer-links">
+        <a href="/#projects">PROJECTS</a>
+        <a href="/#studio">STUDIO</a>
+        <a href="/#about">ABOUT</a>
+        <a href="/#contact">CONTACT</a>
+      </div>
+      <p class="copyright">© 2026 Studio Stonehewer. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

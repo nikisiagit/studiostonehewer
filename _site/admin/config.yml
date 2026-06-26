@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: nikisiagit/studiostonehewer
+  branch: main # Branch to update
+  # base_url: https://your-cloudflare-worker.workers.dev # (Uncomment and set to your worker url for oauth)
+
+media_folder: "src/assets/images" # Media files will be stored in the repo under src/assets/images
+public_folder: "/assets/images" # The src attribute for uploaded media will begin with /assets/images
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "src/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "base.njk"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Year", name: "year", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Featured Image", name: "featured_image", widget: "image"}
+      - {label: "Body", name: "body", widget: "markdown"}
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "src/index.html"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Caption", name: "hero_caption", widget: "string"}
+          - {label: "Quote Text", name: "quote_text", widget: "text"}
