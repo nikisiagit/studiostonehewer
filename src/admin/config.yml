@@ -20,7 +20,9 @@ collections:
       - {label: "Tag (e.g. FULL SERVICE)", name: "tag", widget: "string"}
       - {label: "Year", name: "year", widget: "string"}
       - {label: "Card Description", name: "description", widget: "text"}
+      - {label: "SEO Description (Optional override)", name: "seo_description", widget: "text", required: false}
       - {label: "Featured Image", name: "featured_image", widget: "image"}
+      - {label: "SEO Image (Optional override)", name: "seo_image", widget: "image", required: false}
       - {label: "Intro Text Paragraph 1", name: "intro_text_1", widget: "text"}
       - {label: "Intro Text Paragraph 2", name: "intro_text_2", widget: "text"}
       - label: "Gallery"
@@ -36,6 +38,8 @@ collections:
         name: "home"
         file: "src/index.html"
         fields:
+          - {label: "SEO Description (Optional override)", name: "seo_description", widget: "text", required: false}
+          - {label: "SEO Image (Optional override)", name: "seo_image", widget: "image", required: false}
           - {label: "Hero Left Image", name: "hero_left_image", widget: "image"}
           - {label: "Hero Left Caption", name: "hero_left_caption", widget: "string"}
           - {label: "Hero Left Link URL (optional)", name: "hero_left_url", widget: "string", required: false}
@@ -84,6 +88,9 @@ collections:
         name: "settings"
         file: "src/_data/settings.json"
         fields:
+          - {label: "Global Site Title", name: "site_title", widget: "string"}
+          - {label: "Global Site Description", name: "site_description", widget: "text"}
+          - {label: "Global Site Image", name: "site_image", widget: "image"}
           - {label: "Navigation Logo", name: "nav_logo", widget: "image"}
           - label: "Navigation Links"
             name: "nav_links"

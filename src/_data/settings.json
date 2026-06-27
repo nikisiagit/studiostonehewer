@@ -1,5 +1,8 @@
 {
-  "nav_logo": "/assets/images/logo-bf816thd-black.svg",
+  "site_title": "Studio Stonehewer",
+  "site_description": "Interior design rooted in curated and expressive moments to tell the stories of your home.",
+  "site_image": "/assets/images/oud-west-bedroom-pink.jpg",
+  "nav_logo": "/assets/images/stonehewer_logo_1782489923950.png",
   "nav_links": [
     {
       "label": "PROJECTS",
