@@ -36,6 +36,7 @@ collections:
         name: "home"
         file: "src/index.html"
         fields:
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Hero Caption", name: "hero_caption", widget: "string"}
           - {label: "Quote Text", name: "quote_text", widget: "text"}
           - {label: "Quote Author", name: "quote_author", widget: "string"}
@@ -75,3 +76,14 @@ collections:
           - {label: "Contact Description", name: "contact_description", widget: "text"}
           - {label: "Contact Email", name: "contact_email", widget: "string"}
           - {label: "Contact Instagram", name: "contact_instagram", widget: "string"}
+      - label: "Site Settings"
+        name: "settings"
+        file: "src/_data/settings.json"
+        fields:
+          - {label: "Navigation Logo", name: "nav_logo", widget: "image"}
+          - label: "Navigation Links"
+            name: "nav_links"
+            widget: "list"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "URL", name: "url", widget: "string"}

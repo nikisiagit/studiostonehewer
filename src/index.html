@@ -1,10 +1,7 @@
 ---
+hero_image: "/assets/images/hero_bedroom_1782492820889.png"
 hero_caption: Amsterdam
-quote_text: I am unapologetically you. I am a visual, textural, and sensory
-  story of your emotions and the world you want to create. I will provide a
-  space for you to build and grow. Here, you will make memories and share
-  stories. You will laugh, learn, and love. I will be a constant through the
-  ordinary and extraordinary. I am your sanctuary. I am your home.
+quote_text: "I am unapologetically you. I am a visual, textural, and sensory story of your emotions and the world you want to create. I will provide a space for you to build and grow. Here, you will make memories and share stories. You will laugh, learn, and love. I will be a constant through the ordinary and extraordinary. I am your sanctuary. I am your home."
 quote_author: "'HOME' BY STUDIO STONEHEWER"
 studio_subtitle: THE STUDIO
 studio_title: Interiors with feeling
@@ -91,11 +88,11 @@ title: Studio Stonehewer
 ---
   <!-- Hero & Quote -->
   <section id="home" class="hero-banner-section reveal">
-    <div class="hero-bg"></div>
+    <div class="hero-bg" style="background-image: url('{{ hero_image }}');"></div>
     
     <nav class="navbar hero-nav">
       <a href="index.html" class="nav-brand">
-        <img src="assets/images/stonehewer_logo_1782489923950.png" alt="Studio Stonehewer Logo" class="nav-logo">
+        <img src="{{ settings.nav_logo }}" alt="Studio Stonehewer Logo" class="nav-logo">
         STUDIO STONEHEWER
       </a>
       <div class="menu-toggle" id="mobile-menu">
@@ -103,10 +100,9 @@ title: Studio Stonehewer
         <span class="bar"></span>
       </div>
       <div class="nav-links">
-        <a href="index.html#projects">PROJECTS</a>
-        <a href="index.html#studio">STUDIO</a>
-        <a href="index.html#about">ABOUT</a>
-        <a href="index.html#contact">CONTACT</a>
+        {% for link in settings.nav_links %}
+        <a href="{{ link.url }}">{{ link.label }}</a>
+        {% endfor %}
       </div>
       <div class="nav-right-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

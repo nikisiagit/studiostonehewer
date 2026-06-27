@@ -12,7 +12,7 @@
   {% if not isHome %}
   <nav class="navbar" style="position: sticky; background-color: var(--color-bg);">
     <a href="/" class="nav-brand">
-      <img src="/assets/images/stonehewer_logo_1782489923950.png" alt="Studio Stonehewer Logo" class="nav-logo" style="filter: none; mix-blend-mode: normal; height: 35px;">
+      <img src="{{ settings.nav_logo }}" alt="Studio Stonehewer Logo" class="nav-logo" style="filter: none; mix-blend-mode: normal; height: 35px;">
       STUDIO STONEHEWER
     </a>
     <div class="menu-toggle" id="mobile-menu">
@@ -20,10 +20,9 @@
       <span class="bar"></span>
     </div>
     <div class="nav-links">
-      <a href="/#projects">PROJECTS</a>
-      <a href="/#studio">STUDIO</a>
-      <a href="/#about">ABOUT</a>
-      <a href="/#contact">CONTACT</a>
+      {% for link in settings.nav_links %}
+      <a href="{{ link.url }}">{{ link.label }}</a>
+      {% endfor %}
     </div>
   </nav>
   {% endif %}
@@ -40,10 +39,9 @@
         <a href="#">INSTAGRAM</a>
       </div>
       <div class="footer-links">
-        <a href="/#projects">PROJECTS</a>
-        <a href="/#studio">STUDIO</a>
-        <a href="/#about">ABOUT</a>
-        <a href="/#contact">CONTACT</a>
+        {% for link in settings.nav_links %}
+        <a href="{{ link.url }}">{{ link.label }}</a>
+        {% endfor %}
       </div>
       <p class="copyright">© 2026 Studio Stonehewer. All rights reserved.</p>
     </div>

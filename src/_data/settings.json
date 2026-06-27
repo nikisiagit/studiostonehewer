@@ -1,0 +1,21 @@
+{
+  "nav_logo": "/assets/images/stonehewer_logo_1782489923950.png",
+  "nav_links": [
+    {
+      "label": "PROJECTS",
+      "url": "/#projects"
+    },
+    {
+      "label": "STUDIO",
+      "url": "/#studio"
+    },
+    {
+      "label": "ABOUT",
+      "url": "/#about"
+    },
+    {
+      "label": "CONTACT",
+      "url": "/#contact"
+    }
+  ]
+}
