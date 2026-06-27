@@ -1,11 +1,11 @@
 ---
-hero_image: /assets/images/oud-west-bedroom-pink.jpg
-hero_caption: Amsterdam
-quote_text: I am unapologetically you. I am a visual, textural, and sensory
-  story of your emotions and the world you want to create. I will provide a
-  space for you to build and grow. Here, you will make memories and share
-  stories. You will laugh, learn, and love. I will be a constant through the
-  ordinary and extraordinary. I am your sanctuary. I am your home.
+hero_left_image: "/assets/images/oud-west-bedroom-pink.jpg"
+hero_left_caption: "Amsterdam"
+hero_left_url: "/projects/oud-west/"
+hero_right_image: "/assets/images/project2.jpg"
+hero_right_caption: "Virtual Studio"
+hero_right_url: "/projects/pied-a-terre/"
+quote_text: "I am unapologetically you. I am a visual, textural, and sensory story of your emotions and the world you want to create. I will provide a space for you to build and grow. Here, you will make memories and share stories. You will laugh, learn, and love. I will be a constant through the ordinary and extraordinary. I am your sanctuary. I am your home."
 quote_author: "'HOME' BY STUDIO STONEHEWER"
 studio_subtitle: THE STUDIO
 studio_title: Interiors with feeling
@@ -92,7 +92,12 @@ title: Studio Stonehewer
 ---
   <!-- Hero & Quote -->
   <section id="home" class="hero-banner-section reveal">
-    <div class="hero-bg" style="background-image: url('{{ hero_image }}');"></div>
+    <a href="{{ hero_left_url | default: '#' }}" class="hero-half left" style="background-image: url('{{ hero_left_image }}');">
+      <div class="hero-half-caption">{{ hero_left_caption }}</div>
+    </a>
+    <a href="{{ hero_right_url | default: '#' }}" class="hero-half right" style="background-image: url('{{ hero_right_image }}');">
+      <div class="hero-half-caption">{{ hero_right_caption }}</div>
+    </a>
     
     <nav class="navbar hero-nav">
       <a href="index.html" class="nav-brand">
@@ -115,10 +120,6 @@ title: Studio Stonehewer
         </svg>
       </div>
     </nav>
-
-    <div class="hero-caption">
-      <p>{{ hero_caption }}</p>
-    </div>
 
     <div class="scroll-indicator">
       <div class="mouse">

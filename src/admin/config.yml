@@ -36,8 +36,12 @@ collections:
         name: "home"
         file: "src/index.html"
         fields:
-          - {label: "Hero Image", name: "hero_image", widget: "image"}
-          - {label: "Hero Caption", name: "hero_caption", widget: "string"}
+          - {label: "Hero Left Image", name: "hero_left_image", widget: "image"}
+          - {label: "Hero Left Caption", name: "hero_left_caption", widget: "string"}
+          - {label: "Hero Left Link URL (optional)", name: "hero_left_url", widget: "string", required: false}
+          - {label: "Hero Right Image", name: "hero_right_image", widget: "image"}
+          - {label: "Hero Right Caption", name: "hero_right_caption", widget: "string"}
+          - {label: "Hero Right Link URL (optional)", name: "hero_right_url", widget: "string", required: false}
           - {label: "Quote Text", name: "quote_text", widget: "text"}
           - {label: "Quote Author", name: "quote_author", widget: "string"}
           - {label: "Studio Intro Subtitle", name: "studio_subtitle", widget: "string"}
