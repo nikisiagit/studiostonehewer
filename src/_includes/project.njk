@@ -1,0 +1,30 @@
+---
+layout: base.njk
+---
+  <header class="project-header container reveal">
+    <h4 class="section-subtitle">PROJECTS / {{ category }}</h4>
+    <h1 class="project-title">{{ title }}</h1>
+    <p class="project-meta">{{ tag }} • {{ category }} • {{ year }}</p>
+    <div class="project-header-img-wrap">
+      <img src="{{ featured_image }}" alt="{{ title }}" class="project-header-img">
+    </div>
+    <div class="project-intro-text">
+      {% if intro_text_1 %}<p>{{ intro_text_1 }}</p>{% endif %}
+      {% if intro_text_2 %}<p>{{ intro_text_2 }}</p>{% endif %}
+    </div>
+  </header>
+
+  <section class="project-gallery container reveal">
+    <div class="masonry-grid">
+      {% for item in gallery %}
+      <img src="{{ item.image }}" class="masonry-item {% if item.size != 'regular' %}{{ item.size }}{% endif %}">
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="next-project reveal">
+    <div class="container text-center">
+      <h4 class="section-subtitle">MORE PROJECTS</h4>
+      <a href="/index.html#projects" class="btn-link" style="margin-top: 2rem;">VIEW PORTFOLIO</a>
+    </div>
+  </section>

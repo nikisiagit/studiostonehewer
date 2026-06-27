@@ -14,13 +14,21 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Layout", name: "layout", widget: "hidden", default: "base.njk"}
+      - {label: "Layout", name: "layout", widget: "hidden", default: "project.njk"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Category", name: "category", widget: "string"}
+      - {label: "Tag (e.g. FULL SERVICE)", name: "tag", widget: "string"}
       - {label: "Year", name: "year", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Card Description", name: "description", widget: "text"}
       - {label: "Featured Image", name: "featured_image", widget: "image"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Intro Text Paragraph 1", name: "intro_text_1", widget: "text"}
+      - {label: "Intro Text Paragraph 2", name: "intro_text_2", widget: "text"}
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        fields:
+          - {label: "Image", name: "image", widget: "image"}
+          - {label: "Size", name: "size", widget: "select", options: ["regular", "tall", "wide"], default: "regular"}
   - name: "pages"
     label: "Pages"
     files:

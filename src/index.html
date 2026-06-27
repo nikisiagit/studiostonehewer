@@ -71,29 +71,19 @@ isHome: true
     </div>
     
     <div class="project-cards">
-      <a href="/oud-west/" class="project-card">
+      {% for project in collections.projects %}
+      <a href="{{ project.url }}" class="project-card">
         <div class="project-card-img-wrap">
-          <span class="project-tag">FULL SERVICE</span>
-          <img src="assets/images/project1.jpg" alt="Amsterdam Oud-West" class="project-card-img">
+          <span class="project-tag">{{ project.data.tag }}</span>
+          <img src="{{ project.data.featured_image }}" alt="{{ project.data.title }}" class="project-card-img">
         </div>
         <div class="project-card-info">
-          <h3 class="project-card-title">Amsterdam Oud-West</h3>
-          <p class="project-card-meta">FULL SERVICE • RESIDENTIAL • 2024</p>
-          <p class="project-card-desc">A 1930s Amsterdam apartment reimagined as a curated, mid-century sanctuary. We expressed this clients desire for a bold, textural, and unapologetically unique home.</p>
+          <h3 class="project-card-title">{{ project.data.title }}</h3>
+          <p class="project-card-meta">{{ project.data.tag }} • {{ project.data.category }} • {{ project.data.year }}</p>
+          <p class="project-card-desc">{{ project.data.description }}</p>
         </div>
       </a>
-      
-      <a href="/pied-a-terre/" class="project-card">
-        <div class="project-card-img-wrap">
-          <span class="project-tag">VIRTUAL DESIGN</span>
-          <img src="assets/images/project3.jpg" alt="Amsterdam Pied-à-terre" class="project-card-img">
-        </div>
-        <div class="project-card-info">
-          <h3 class="project-card-title">Amsterdam Pied-à-terre</h3>
-          <p class="project-card-meta">VIRTUAL DESIGN • RESIDENTIAL • 2023</p>
-          <p class="project-card-desc">A virtual design study for a 1920s west-side apartment with neutral but bold base tones, vintage flair, and living and dining spaces designed as separate but twinned retreats.</p>
-        </div>
-      </a>
+      {% endfor %}
     </div>
   </section>
 
