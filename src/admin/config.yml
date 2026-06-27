@@ -36,6 +36,42 @@ collections:
         name: "home"
         file: "src/index.html"
         fields:
-          - {label: "Title", name: "title", widget: "string"}
           - {label: "Hero Caption", name: "hero_caption", widget: "string"}
           - {label: "Quote Text", name: "quote_text", widget: "text"}
+          - {label: "Quote Author", name: "quote_author", widget: "string"}
+          - {label: "Studio Intro Subtitle", name: "studio_subtitle", widget: "string"}
+          - {label: "Studio Intro Title", name: "studio_title", widget: "string"}
+          - {label: "Studio Intro Description", name: "studio_description", widget: "text"}
+          - {label: "Projects Subtitle", name: "projects_subtitle", widget: "string"}
+          - {label: "Projects Title", name: "projects_title", widget: "string"}
+          - {label: "Projects Description", name: "projects_description", widget: "text"}
+          - {label: "How We Work Subtitle", name: "hww_subtitle", widget: "string"}
+          - {label: "How We Work Title", name: "hww_title", widget: "string"}
+          - {label: "How We Work Description", name: "hww_description", widget: "text"}
+          - {label: "How We Work Image", name: "hww_image", widget: "image"}
+          - {label: "Virtual Service Title", name: "virtual_title", widget: "string"}
+          - {label: "Virtual Service Description", name: "virtual_description", widget: "text"}
+          - {label: "Virtual Service Expectations", name: "virtual_expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - {label: "Full Service Title", name: "full_title", widget: "string"}
+          - {label: "Full Service Description", name: "full_description", widget: "text"}
+          - {label: "Full Service Expectations", name: "full_expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - {label: "Services CTA Title", name: "cta_title", widget: "string"}
+          - {label: "Services CTA Description", name: "cta_description", widget: "text"}
+          - {label: "About Subtitle", name: "about_subtitle", widget: "string"}
+          - {label: "About Title", name: "about_title", widget: "string"}
+          - {label: "About Image", name: "about_image", widget: "image"}
+          - {label: "About Role", name: "about_role", widget: "string"}
+          - {label: "About Name", name: "about_name", widget: "string"}
+          - {label: "About Bio Paragraphs", name: "about_body", widget: "list", field: {label: "Paragraph", name: "paragraph", widget: "text"}}
+          - label: "What Guides Us Values"
+            name: "guides"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "string"}
+          - {label: "Final CTA Title", name: "final_cta_title", widget: "string"}
+          - {label: "Contact Subtitle", name: "contact_subtitle", widget: "string"}
+          - {label: "Contact Title", name: "contact_title", widget: "string"}
+          - {label: "Contact Description", name: "contact_description", widget: "text"}
+          - {label: "Contact Email", name: "contact_email", widget: "string"}
+          - {label: "Contact Instagram", name: "contact_instagram", widget: "string"}
