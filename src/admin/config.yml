@@ -1,8 +1,8 @@
 backend:
   name: github
   repo: nikisiagit/studiostonehewer
-  branch: main # Branch to update
-  # base_url: https://your-cloudflare-worker.workers.dev # (Uncomment and set to your worker url for oauth)
+  branch: main
+  base_url: https://YOUR_CLOUDFLARE_PAGES_DOMAIN.pages.dev # REPLACE this with your actual Cloudflare Pages domain
 
 media_folder: "src/assets/images" # Media files will be stored in the repo under src/assets/images
 public_folder: "/assets/images" # The src attribute for uploaded media will begin with /assets/images
