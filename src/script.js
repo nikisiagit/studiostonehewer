@@ -1,18 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Custom Cursor
-  const cursor = document.querySelector('.cursor');
-  const interactables = document.querySelectorAll('a, button, .hero-logo, .about-image img, .project-card-img, .full-width-img, .masonry-item, .project-header-img');
-
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
-
-  interactables.forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-  });
-
   // Fade out hero nav on scroll down, fade in on scroll up
   const heroNav = document.querySelector('.hero-nav');
   let lastScrollY = window.scrollY;
