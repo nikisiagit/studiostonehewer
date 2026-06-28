@@ -129,9 +129,8 @@ a {
   flex: 1;
 }
 .nav-logo {
-  height: 50px;
+  height: 2.2rem;
   width: auto;
-  filter: invert(1) contrast(1.5);
   mix-blend-mode: screen;
 }
 .nav-links {
