@@ -6,7 +6,7 @@ year: "2024"
 description: A 1930s Amsterdam apartment reimagined as a curated, mid-century
   sanctuary. We expressed this clients desire for a bold, textural, and
   unapologetically unique home.
-featured_image: /assets/images/project1.jpg
+featured_image: https://res.cloudinary.com/sbnrjtk3/image/upload/v1782722914/IMG_6559_t4elwt.jpg
 intro_text_1: A 1930s Amsterdam apartment reimagined as a curated, mid-century
   sanctuary. We expressed this clients desire for a bold, textural, and
   unapologetically unique home.
