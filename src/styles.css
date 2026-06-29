@@ -36,7 +36,7 @@ body {
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease-out, background-color 0.2s ease, width 0.2s ease, height 0.2s ease;
+  transition: transform 0.1s ease-out, background-color 0.2s ease, width 0.2s ease, height 0.2s ease, left 0.15s ease-out, top 0.15s ease-out;
 }
 .cursor.hovered {
   width: 40px;
