@@ -3,10 +3,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const cursor = document.querySelector('.cursor');
   const interactables = document.querySelectorAll('a, button, .hero-logo, .about-image img, .project-card-img, .full-width-img, .masonry-item, .project-header-img');
 
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let cursorX = mouseX;
+  let cursorY = mouseY;
+
   document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
+
+  function animateCursor() {
+    // Linear interpolation for smooth trailing effect
+    cursorX += (mouseX - cursorX) * 0.15;
+    cursorY += (mouseY - cursorY) * 0.15;
+    
+    // Apply via hardware-accelerated transform
+    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+    
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
 
   interactables.forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
