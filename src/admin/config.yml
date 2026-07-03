@@ -21,6 +21,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Layout", name: "layout", widget: "hidden", default: "project.njk"}
+      - {label: "Tags", name: "tags", widget: "hidden", default: ["projects"]}
       - {label: "Title", name: "title", widget: "string", hint: "The name of the project (e.g. Amsterdam Oud-West)."}
       - {label: "Category", name: "category", widget: "string", hint: "E.g. RESIDENTIAL or COMMERCIAL"}
       - {label: "Tag (e.g. FULL SERVICE)", name: "tag", widget: "string", hint: "A short tag that appears on the project card."}

@@ -1,5 +1,6 @@
 ---
 layout: project.njk
+tags: ["projects"]
 title: Poole Dorset
 category: RESIDENTIAL
 tag: FULL SERVICE
