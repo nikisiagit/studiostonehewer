@@ -42,6 +42,18 @@ collections:
     label: "Pages"
     description: "Edit the core pages of your website, like the Home Page."
     files:
+      - label: "Portfolio Page"
+        name: "portfolio"
+        file: "src/portfolio.md"
+        description: "Manage the content at the top of the Portfolio page."
+        fields:
+          - {label: "SEO Title", name: "title", widget: "string"}
+          - {label: "SEO Description (Optional)", name: "seo_description", widget: "text", required: false}
+          - {label: "Subtitle", name: "subtitle", widget: "string"}
+          - {label: "Header Title", name: "header_title", widget: "string"}
+          - {label: "Header Description", name: "header_description", widget: "text"}
+          - {label: "Permalink", name: "permalink", widget: "hidden", default: "/projects/index.html"}
+          - {label: "Layout", name: "layout", widget: "hidden", default: "portfolio.njk"}
       - label: "Home Page"
         name: "home"
         file: "src/index.html"
