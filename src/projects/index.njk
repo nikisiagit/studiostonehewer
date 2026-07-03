@@ -1,0 +1,31 @@
+---
+layout: base.njk
+title: Portfolio - Studio Stonehewer
+seo_description: Browse our collection of curated interior design projects.
+---
+
+<section class="projects-section reveal" style="padding-top: 150px; min-height: 80vh;">
+  <div class="projects-header container" style="margin-bottom: 4rem; justify-content: center; text-align: center;">
+    <div>
+      <h4 class="section-subtitle">PORTFOLIO</h4>
+      <h2 class="section-title" style="margin-bottom: 1rem;">All Projects</h2>
+      <p style="max-width: 600px; margin: 0 auto; color: var(--color-light-text);">Each project begins with a feeling and ends with a home. Browse our full selection of recent work.</p>
+    </div>
+  </div>
+  
+  <div class="project-cards">
+    {% for project in collections.projects %}
+    <a href="{{ project.url }}" class="project-card">
+      <div class="project-card-img-wrap">
+        <span class="project-tag">{{ project.data.tag }}</span>
+        <img src="{{ project.data.featured_image }}" alt="{{ project.data.title }}" class="project-card-img">
+      </div>
+      <div class="project-card-info">
+        <h3 class="project-card-title">{{ project.data.title }}</h3>
+        <p class="project-card-meta">{{ project.data.tag }} • {{ project.data.category }} • {{ project.data.year }}</p>
+        <p class="project-card-desc">{{ project.data.description }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
