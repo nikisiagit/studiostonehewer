@@ -1,0 +1,18 @@
+---
+pagination:
+  data: wp_projects
+  size: 1
+  alias: project
+permalink: "projects/{{ project.slug | slugify }}/index.html"
+layout: project.njk
+eleventyComputed:
+  title: "{{ project.title }}"
+  category: "{{ project.category }}"
+  tag: "{{ project.tag }}"
+  year: "{{ project.year }}"
+  description: "{{ project.description }}"
+  featured_image: "{{ project.featured_image }}"
+  intro_text_1: "{{ project.intro_text_1 }}"
+  intro_text_2: "{{ project.intro_text_2 }}"
+  gallery: "{{ project.gallery }}"
+---
