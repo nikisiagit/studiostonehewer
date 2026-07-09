@@ -1,0 +1,76 @@
+module.exports = async function() {
+  // TODO: Replace with your actual WordPress REST API endpoints for the Home and Portfolio pages.
+  // For example: "https://admin.studiostonehewer.com/wp-json/wp/v2/pages?slug=home"
+  
+  // Dummy data representing what WordPress ACF will return
+  return {
+    home: {
+      hero_left_image: "/assets/images/oud-west-bedroom-pink.jpg",
+      hero_left_caption: "Amsterdam ",
+      hero_left_url: "/projects/oud-west/",
+      hero_right_image: "/assets/images/unknown.jpeg",
+      hero_right_caption: "Poole Dorset",
+      hero_right_url: "/projects/poole-dorset/",
+      quote_text: "I am unapologetically you. I am a visual, textural, and sensory story of your emotions and the world you want to create. I will provide a space for you to build and grow. Here, you will make memories and share stories. You will laugh, learn, and love. I will be a constant through the ordinary and extraordinary. I am your sanctuary. I am your home.",
+      quote_author: "'HOME' BY STUDIO STONEHEWER",
+      studio_subtitle: "THE STUDIO",
+      studio_title: "Interiors with feeling",
+      studio_description: "Studio Stonehewer is an interior design practice devoted to spaces that feel as good as they look. We work slowly and intentionally, layering materials, light, personal curiosa, and considered detail to create homes that hold your story.",
+      projects_subtitle: "PORTFOLIO",
+      projects_title: "Projects",
+      projects_description: "Each project begins with a feeling and ends with a home. From full-service residential interiors to flexible, virtual design studies, browse a selection of our recent work.",
+      hww_subtitle: "THE STUDIO",
+      hww_title: "How we work",
+      hww_description: "Studio Stonehewer is a small, intentional practice. We offer two ways to work together: a flexible virtual service and a full, hands-on service, so each home receives the attention and care it deserves.",
+      hww_image: "/assets/images/studio-living.png",
+      virtual_title: "The Digital Studio",
+      virtual_description: "Digital Interior Design offers a flexible and virtual approach to one or multiple spaces. Through design mapping, creation and reviews, we create a custom plan with moodboards, 3D elevations and shopping lists that can be implemented on your own time and budget.",
+      virtual_expectations: [
+        { item: "A design questionnaire to get to know you" },
+        { item: "60 minutes of 1:1 virtual time with an interior designer" },
+        { item: "One moodboard plus one review per room" },
+        { item: "One 3D elevation plus one review per room" },
+        { item: "Colour and fabric consulting and guidance for each room" },
+        { item: "A bespoke shopping list with a minimum of 10 items per room (based on your budget)" }
+      ],
+      full_title: "The Full Service Studio",
+      full_description: "An interior design service for larger scale projects including in-person consultations, project management, site visits, furniture procurement and supporting hands-on installation.",
+      full_expectations: [
+        { item: "1:1 consultations — collaborating with you to ensure your new home incorporates all the elements you're looking for" },
+        { item: "Full service review — working with your architect and construction team on space planning" },
+        { item: "Interior concept — taking away the guesswork by selecting materials, colours, fabrics and finishes for you" },
+        { item: "Turnkey installation — delivering the finishing touches, ensuring everything tells a bespoke story" }
+      ],
+      cta_title: "Have a space in mind?",
+      cta_description: "Whichever service feels right, we'd love to hear about your home and how you want it to feel.",
+      about_subtitle: "ABOUT",
+      about_title: "Studio Stonehewer",
+      about_image: "/assets/images/eric-about.png",
+      about_role: "FOUNDER",
+      about_name: "Eric Stonehewer",
+      about_body: [
+        { paragraph: "Amidst the hum of sewing machines, vibrant fabrics, explosions of colour, and warmth of peers, a young Eric discovered his passion for creating. From challenging beginnings, at the age of 14, he found a new home in the world of art — a way to transform the ordinary into the extraordinary." },
+        { paragraph: "From those early days, Eric's eye for design was realised, beginning to cultivate bespoke spaces in every place he inhabited, each one a canvas for his boundless imagination. Whether it was a cosy nook or a grand moment, Eric's knack for crafting tailored experiences and unforgettable moments quickly became his signature." },
+        { paragraph: "Now, Eric channels that same youthful, classic, and uninhibited enthusiasm into every project. His eye for detail and ability to blend functionality with elegance deliver the unique Studio Stonehewer experience." }
+      ],
+      guides: [
+        { title: "Texture first", description: "Material and tactility before decoration." },
+        { title: "Quiet luxury", description: "Considered, lasting, never loud." },
+        { title: "Personal moments", description: "Adding visual touches of your personality to every space" }
+      ],
+      final_cta_title: "Let's create your home",
+      contact_subtitle: "CONTACT",
+      contact_title: "Say hello",
+      contact_description: "Whether you're ready to begin or simply exploring ideas, we'd love to hear from you. Tell us a little about your home and what you're hoping to create.",
+      contact_email: "studiostonehewer@gmail.com",
+      contact_instagram: "@studiostonehewer"
+    },
+    portfolio: {
+      title: "Portfolio - Studio Stonehewer",
+      seo_description: "Browse our collection of curated interior design projects.",
+      subtitle: "PORTFOLIO",
+      header_title: "All Projects",
+      header_description: "Each project begins with a feeling and ends with a home. Browse our full selection of recent work."
+    }
+  };
+};
