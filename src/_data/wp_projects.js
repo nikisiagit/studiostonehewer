@@ -1,6 +1,6 @@
 module.exports = async function() {
-  // TODO: Replace with your actual WordPress REST API endpoint for Posts.
-  
+  const API_URL = "https://admin.nikitaovcinnikovs.com/wp-json/wp/v2/posts?_embed&per_page=100";
+
   // Dummy data representing raw WordPress fields
   // In the free ACF tier workaround, galleries use numbered fields up to 15.
   const rawProject1 = {
@@ -45,11 +45,28 @@ module.exports = async function() {
     }
   };
 
-  const rawPosts = [rawProject1, rawProject2];
+  const fallbackPosts = [rawProject1, rawProject2];
+
+  // Fetch live posts
+  let livePosts = [];
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      // Filter out empty/default posts like "Hello World" by checking if they actually filled out the ACF 'tag'
+      livePosts = data.filter(post => post.acf && post.acf.tag && post.acf.tag.trim() !== "");
+    }
+  } catch (err) {
+    console.warn("[wp_projects] Failed to fetch live posts", err);
+  }
+
+  // Use live posts if they exist, otherwise use fallback dummy posts so the site doesn't break
+  const rawPostsToUse = livePosts.length > 0 ? livePosts : fallbackPosts;
 
   // Helper to bundle numbered fields into a gallery array
   const parseGallery = (acf) => {
     const gallery = [];
+    if (!acf) return gallery;
     for (let i = 1; i <= 15; i++) {
       const img = acf[`gallery_image_${i}`];
       const size = acf[`gallery_size_${i}`];
@@ -64,7 +81,7 @@ module.exports = async function() {
   };
 
   // Map the raw WordPress posts to the exact structure the Eleventy frontend expects
-  const projects = rawPosts.map(post => {
+  const projects = rawPostsToUse.map(post => {
     return {
       title: post.title.rendered,
       slug: post.slug,
@@ -74,7 +91,8 @@ module.exports = async function() {
       description: post.acf.description,
       intro_text_1: post.acf.intro_text_1,
       intro_text_2: post.acf.intro_text_2,
-      featured_image: post.acf.featured_image,
+      // If live featured image is missing, you could fall back to a placeholder, but this expects ACF featured_image field
+      featured_image: post.acf.featured_image || "/assets/images/unknown.jpeg",
       gallery: parseGallery(post.acf)
     };
   });

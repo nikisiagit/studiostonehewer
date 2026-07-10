@@ -1,28 +1,5 @@
 module.exports = async function() {
-  // TODO: Replace with your actual WordPress REST API endpoints for the Home and Portfolio pages.
-  // For example: "https://admin.studiostonehewer.com/wp-json/wp/v2/pages?slug=home"
-  
-  // Simulated raw string from an ACF Text Area (for free tier workaround)
-  const rawVirtualExpectations = `A design questionnaire to get to know you
-60 minutes of 1:1 virtual time with an interior designer
-One moodboard plus one review per room
-One 3D elevation plus one review per room
-Colour and fabric consulting and guidance for each room
-A bespoke shopping list with a minimum of 10 items per room (based on your budget)`;
-
-  const rawFullExpectations = `1:1 consultations — collaborating with you to ensure your new home incorporates all the elements you're looking for
-Full service review — working with your architect and construction team on space planning
-Interior concept — taking away the guesswork by selecting materials, colours, fabrics and finishes for you
-Turnkey installation — delivering the finishing touches, ensuring everything tells a bespoke story`;
-
-  const rawAboutBody = `Amidst the hum of sewing machines, vibrant fabrics, explosions of colour, and warmth of peers, a young Eric discovered his passion for creating. From challenging beginnings, at the age of 14, he found a new home in the world of art — a way to transform the ordinary into the extraordinary.
-From those early days, Eric's eye for design was realised, beginning to cultivate bespoke spaces in every place he inhabited, each one a canvas for his boundless imagination. Whether it was a cosy nook or a grand moment, Eric's knack for crafting tailored experiences and unforgettable moments quickly became his signature.
-Now, Eric channels that same youthful, classic, and uninhibited enthusiasm into every project. His eye for detail and ability to blend functionality with elegance deliver the unique Studio Stonehewer experience.`;
-
-  // For the guides, we can use a "Title | Description" format on each line
-  const rawGuides = `Texture first | Material and tactility before decoration.
-Quiet luxury | Considered, lasting, never loud.
-Personal moments | Adding visual touches of your personality to every space`;
+  const API_URL = "https://admin.nikitaovcinnikovs.com/wp-json/wp/v2/pages";
 
   // Helper to split text areas by newline and remove empty lines
   const splitText = (text) => {
@@ -41,8 +18,13 @@ Personal moments | Adding visual touches of your personality to every space`;
     });
   };
 
-  // Dummy data representing what WordPress ACF will return
-  return {
+  // The fallback dummy data
+  const rawVirtualExpectations = `A design questionnaire to get to know you\n60 minutes of 1:1 virtual time with an interior designer\nOne moodboard plus one review per room\nOne 3D elevation plus one review per room\nColour and fabric consulting and guidance for each room\nA bespoke shopping list with a minimum of 10 items per room (based on your budget)`;
+  const rawFullExpectations = `1:1 consultations — collaborating with you to ensure your new home incorporates all the elements you're looking for\nFull service review — working with your architect and construction team on space planning\nInterior concept — taking away the guesswork by selecting materials, colours, fabrics and finishes for you\nTurnkey installation — delivering the finishing touches, ensuring everything tells a bespoke story`;
+  const rawAboutBody = `Amidst the hum of sewing machines, vibrant fabrics, explosions of colour, and warmth of peers, a young Eric discovered his passion for creating. From challenging beginnings, at the age of 14, he found a new home in the world of art — a way to transform the ordinary into the extraordinary.\nFrom those early days, Eric's eye for design was realised, beginning to cultivate bespoke spaces in every place he inhabited, each one a canvas for his boundless imagination. Whether it was a cosy nook or a grand moment, Eric's knack for crafting tailored experiences and unforgettable moments quickly became his signature.\nNow, Eric channels that same youthful, classic, and uninhibited enthusiasm into every project. His eye for detail and ability to blend functionality with elegance deliver the unique Studio Stonehewer experience.`;
+  const rawGuides = `Texture first | Material and tactility before decoration.\nQuiet luxury | Considered, lasting, never loud.\nPersonal moments | Adding visual touches of your personality to every space`;
+
+  const fallbackData = {
     home: {
       hero_left_image: "/assets/images/oud-west-bedroom-pink.jpg",
       hero_left_caption: "Amsterdam ",
@@ -64,7 +46,6 @@ Personal moments | Adding visual touches of your personality to every space`;
       hww_image: "/assets/images/studio-living.png",
       virtual_title: "The Digital Studio",
       virtual_description: "Digital Interior Design offers a flexible and virtual approach to one or multiple spaces. Through design mapping, creation and reviews, we create a custom plan with moodboards, 3D elevations and shopping lists that can be implemented on your own time and budget.",
-      // Map the raw text to arrays
       virtual_expectations: splitText(rawVirtualExpectations).map(item => ({ item })),
       full_title: "The Full Service Studio",
       full_description: "An interior design service for larger scale projects including in-person consultations, project management, site visits, furniture procurement and supporting hands-on installation.",
@@ -92,5 +73,57 @@ Personal moments | Adding visual touches of your personality to every space`;
       header_title: "All Projects",
       header_description: "Each project begins with a feeling and ends with a home. Browse our full selection of recent work."
     }
+  };
+
+  // Helper to fetch and parse a specific page's ACF fields
+  const fetchPageAcf = async (slug) => {
+    try {
+      const res = await fetch(`${API_URL}?slug=${slug}`);
+      const data = await res.json();
+      if (data && data.length > 0 && data[0].acf) {
+        return data[0].acf;
+      }
+    } catch (err) {
+      console.warn(`[wp_pages] Failed to fetch live data for ${slug}`, err);
+    }
+    return {};
+  };
+
+  const liveHome = await fetchPageAcf("home");
+  const livePortfolio = await fetchPageAcf("portfolio");
+
+  // Merge live data over fallback data. If a live field is empty ("" or null), use the fallback.
+  const mergeData = (fallback, live, isHome) => {
+    const merged = { ...fallback };
+    
+    // Simple text fields
+    for (const key in live) {
+      if (live[key] !== "" && live[key] !== null && fallback[key] !== undefined) {
+        merged[key] = live[key];
+      }
+    }
+
+    // Special parsing for home page complex fields
+    if (isHome) {
+      if (live.virtual_expectations) {
+        merged.virtual_expectations = splitText(live.virtual_expectations).map(item => ({ item }));
+      }
+      if (live.full_expectations) {
+        merged.full_expectations = splitText(live.full_expectations).map(item => ({ item }));
+      }
+      if (live.about_body) {
+        merged.about_body = splitText(live.about_body).map(paragraph => ({ paragraph }));
+      }
+      if (live.guides) {
+        merged.guides = parseGuides(live.guides);
+      }
+    }
+
+    return merged;
+  };
+
+  return {
+    home: mergeData(fallbackData.home, liveHome, true),
+    portfolio: mergeData(fallbackData.portfolio, livePortfolio, false)
   };
 };
