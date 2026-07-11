@@ -1,5 +1,6 @@
 module.exports = async function() {
-  const API_URL = "http://127.0.0.1:3000/api/projects?limit=100";
+  const BASE_URL = process.env.PAYLOAD_API_URL || "http://127.0.0.1:3000";
+  const API_URL = `${BASE_URL}/api/projects?limit=100`;
 
   // Dummy data representing raw Payload fields
   let rawProjects = [

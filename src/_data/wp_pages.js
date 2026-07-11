@@ -1,5 +1,6 @@
 module.exports = async function() {
-  const API_URL = "http://127.0.0.1:3000/api/globals";
+  const BASE_URL = process.env.PAYLOAD_API_URL || "http://127.0.0.1:3000";
+  const API_URL = `${BASE_URL}/api/globals`;
 
   // Helper to split text areas by newline and remove empty lines
   const splitText = (text) => {

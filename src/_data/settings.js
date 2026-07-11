@@ -1,5 +1,6 @@
 module.exports = async function() {
-  const API_URL = "http://127.0.0.1:3000/api/globals/site-settings";
+  const BASE_URL = process.env.PAYLOAD_API_URL || "http://127.0.0.1:3000";
+  const API_URL = `${BASE_URL}/api/globals/site-settings`;
   
   // Format: LABEL | URL
   const rawNavLinks = `PROJECTS | /projects/\nSTUDIO | /#studio\nABOUT | /#about\nCONTACT | /#contact`;
