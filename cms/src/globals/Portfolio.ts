@@ -2,6 +2,9 @@ import type { GlobalConfig } from 'payload'
 
 export const Portfolio: GlobalConfig = {
   slug: 'portfolio',
+  access: {
+    read: () => true,
+  },
   fields: [
     { name: 'seo_description', type: 'textarea' },
     { name: 'subtitle', type: 'text' },

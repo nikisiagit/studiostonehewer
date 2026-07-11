@@ -2,10 +2,15 @@ module.exports = async function() {
   const BASE_URL = process.env.PAYLOAD_API_URL || "http://127.0.0.1:3000";
   const API_URL = `${BASE_URL}/api/globals`;
 
-  // Helper to split text areas by newline and remove empty lines
   const splitText = (text) => {
     if (!text) return [];
     return text.split('\n').map(item => item.trim()).filter(item => item.length > 0);
+  };
+
+  const getUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http')) return url;
+    return `${BASE_URL}${url}`;
   };
 
   const rawVirtualExpectations = `A design questionnaire to get to know you\n60 minutes of 1:1 virtual time with an interior designer\nOne moodboard plus one review per room\nOne 3D elevation plus one review per room\nColour and fabric consulting and guidance for each room\nA bespoke shopping list with a minimum of 10 items per room (based on your budget)`;
@@ -71,9 +76,9 @@ module.exports = async function() {
       // Only use live data if fields were actually filled out, otherwise fallback
       if (homeData && homeData.quote_text) {
         home = {
-          heroLeftImage: homeData.hero_left_image?.url || home.heroLeftImage,
+          heroLeftImage: getUrl(homeData.hero_left_image?.url) || home.heroLeftImage,
           heroLeftCaption: homeData.hero_left_caption || home.heroLeftCaption,
-          heroRightImage: homeData.hero_right_image?.url || home.heroRightImage,
+          heroRightImage: getUrl(homeData.hero_right_image?.url) || home.heroRightImage,
           heroRightCaption: homeData.hero_right_caption || home.heroRightCaption,
           quoteText: homeData.quote_text || home.quoteText,
           quoteAuthor: homeData.quote_author || home.quoteAuthor,
@@ -86,7 +91,7 @@ module.exports = async function() {
           hwwSubtitle: homeData.hww_subtitle || home.hwwSubtitle,
           hwwTitle: homeData.hww_title || home.hwwTitle,
           hwwDescription: homeData.hww_description || home.hwwDescription,
-          hwwImage: homeData.hww_image?.url || home.hwwImage,
+          hwwImage: getUrl(homeData.hww_image?.url) || home.hwwImage,
           virtualTitle: homeData.virtual_title || home.virtualTitle,
           virtualDescription: homeData.virtual_description || home.virtualDescription,
           virtualExpectations: homeData.virtual_expectations ? splitText(homeData.virtual_expectations) : home.virtualExpectations,
@@ -97,7 +102,7 @@ module.exports = async function() {
           ctaDescription: homeData.cta_description || home.ctaDescription,
           aboutSubtitle: homeData.about_subtitle || home.aboutSubtitle,
           aboutTitle: homeData.about_title || home.aboutTitle,
-          aboutImage: homeData.about_image?.url || home.aboutImage,
+          aboutImage: getUrl(homeData.about_image?.url) || home.aboutImage,
           aboutRole: homeData.about_role || home.aboutRole,
           aboutName: homeData.about_name || home.aboutName,
           aboutBody: homeData.about_body ? splitText(homeData.about_body) : home.aboutBody,

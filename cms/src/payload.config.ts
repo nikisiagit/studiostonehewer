@@ -14,7 +14,7 @@ import { Projects } from './collections/Projects'
 import { Home } from './globals/Home'
 import { Portfolio } from './globals/Portfolio'
 import { SiteSettings } from './globals/SiteSettings'
-import migrations from './db/migrations'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -51,6 +51,9 @@ const cloudflare =
 export default buildConfig({
   admin: {
     user: Users.slug,
+    meta: {
+      titleSuffix: '- Studio Stonehewer',
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },

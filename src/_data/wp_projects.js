@@ -45,6 +45,12 @@ module.exports = async function() {
     console.log("Could not connect to Payload Projects API. Using dummy data.");
   }
 
+  const getUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http')) return url;
+    return `${BASE_URL}${url}`;
+  };
+
   // Transform raw data into the format Eleventy expects
   const transformedProjects = rawProjects.map((post) => {
     const slug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -52,7 +58,7 @@ module.exports = async function() {
     // Fallback if gallery isn't set or is empty
     const galleryItems = post.gallery && post.gallery.length > 0 
       ? post.gallery.map(item => ({
-          url: item.image?.url || "/assets/images/unknown.jpeg",
+          url: getUrl(item.image?.url) || "/assets/images/unknown.jpeg",
           size: item.size
         }))
       : [];

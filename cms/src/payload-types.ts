@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    projects: Project;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -87,8 +89,16 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+    portfolio: Portfolio;
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -161,6 +171,34 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  title: string;
+  /**
+   * e.g., RESIDENTIAL or COMMERCIAL
+   */
+  tag: string;
+  year: string;
+  /**
+   * Short description for the project card
+   */
+  description: string;
+  intro_text_1?: string | null;
+  intro_text_2?: string | null;
+  gallery?:
+    | {
+        image: number | Media;
+        size: 'regular' | 'tall' | 'wide';
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -190,6 +228,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -273,6 +315,27 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  tag?: T;
+  year?: T;
+  description?: T;
+  intro_text_1?: T;
+  intro_text_2?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        size?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -310,6 +373,151 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  hero_left_image?: (number | null) | Media;
+  hero_left_caption?: string | null;
+  hero_right_image?: (number | null) | Media;
+  hero_right_caption?: string | null;
+  quote_text?: string | null;
+  quote_author?: string | null;
+  studio_subtitle?: string | null;
+  studio_title?: string | null;
+  studio_description?: string | null;
+  projects_subtitle?: string | null;
+  projects_title?: string | null;
+  projects_description?: string | null;
+  hww_subtitle?: string | null;
+  hww_title?: string | null;
+  hww_description?: string | null;
+  hww_image?: (number | null) | Media;
+  virtual_title?: string | null;
+  virtual_description?: string | null;
+  virtual_expectations?: string | null;
+  full_title?: string | null;
+  full_description?: string | null;
+  full_expectations?: string | null;
+  cta_title?: string | null;
+  cta_description?: string | null;
+  final_cta_title?: string | null;
+  about_subtitle?: string | null;
+  about_title?: string | null;
+  about_image?: (number | null) | Media;
+  about_role?: string | null;
+  about_name?: string | null;
+  about_body?: string | null;
+  guides?: string | null;
+  contact_subtitle?: string | null;
+  contact_title?: string | null;
+  contact_description?: string | null;
+  contact_email?: string | null;
+  contact_instagram?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio".
+ */
+export interface Portfolio {
+  id: number;
+  seo_description?: string | null;
+  subtitle?: string | null;
+  header_title?: string | null;
+  header_description?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  site_title?: string | null;
+  site_description?: string | null;
+  /**
+   * Format: LABEL | /url
+   */
+  nav_links?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  hero_left_image?: T;
+  hero_left_caption?: T;
+  hero_right_image?: T;
+  hero_right_caption?: T;
+  quote_text?: T;
+  quote_author?: T;
+  studio_subtitle?: T;
+  studio_title?: T;
+  studio_description?: T;
+  projects_subtitle?: T;
+  projects_title?: T;
+  projects_description?: T;
+  hww_subtitle?: T;
+  hww_title?: T;
+  hww_description?: T;
+  hww_image?: T;
+  virtual_title?: T;
+  virtual_description?: T;
+  virtual_expectations?: T;
+  full_title?: T;
+  full_description?: T;
+  full_expectations?: T;
+  cta_title?: T;
+  cta_description?: T;
+  final_cta_title?: T;
+  about_subtitle?: T;
+  about_title?: T;
+  about_image?: T;
+  about_role?: T;
+  about_name?: T;
+  about_body?: T;
+  guides?: T;
+  contact_subtitle?: T;
+  contact_title?: T;
+  contact_description?: T;
+  contact_email?: T;
+  contact_instagram?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio_select".
+ */
+export interface PortfolioSelect<T extends boolean = true> {
+  seo_description?: T;
+  subtitle?: T;
+  header_title?: T;
+  header_description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  site_title?: T;
+  site_description?: T;
+  nav_links?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
