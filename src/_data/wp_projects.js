@@ -1,101 +1,74 @@
 module.exports = async function() {
-  const API_URL = "https://admin.nikitaovcinnikovs.com/wp-json/wp/v2/posts?_embed&per_page=100";
+  const API_URL = "http://127.0.0.1:3000/api/projects?limit=100";
 
-  // Dummy data representing raw WordPress fields
-  // In the free ACF tier workaround, galleries use numbered fields up to 15.
-  const rawProject1 = {
-    title: { rendered: "Oud-West" },
-    slug: "oud-west",
-    acf: {
+  // Dummy data representing raw Payload fields
+  let rawProjects = [
+    {
+      title: "Oud-West",
       tag: "RESIDENTIAL",
       year: "2024",
       description: "An airy, classic yet playful apartment in Amsterdam.",
       intro_text_1: "A young couple were relocating to Amsterdam from the US and found a beautiful apartment in the popular Oud West neighbourhood. Looking to bring a sense of their personality, along with a classic and elevated touch, they brought us in right away.",
       intro_text_2: "We used a mix of old, vintage elements and playful fabrics with a variety of textures alongside new, timeless pieces. The apartment now tells a story of both classic elegance and fresh youth.",
-      featured_image: "/assets/images/oud-west-living-table.jpg",
-      // Numbered gallery fields
-      gallery_image_1: "/assets/images/oud-west-living-chair.jpg",
-      gallery_size_1: "tall",
-      gallery_image_2: "/assets/images/oud-west-living-sofa.jpg",
-      gallery_size_2: "regular",
-      gallery_image_3: "/assets/images/oud-west-dining.jpg",
-      gallery_size_3: "wide",
-      gallery_image_4: "/assets/images/oud-west-bedroom-blue.jpg",
-      gallery_size_4: "regular",
-      gallery_image_5: "/assets/images/oud-west-bedroom-pink.jpg",
-      gallery_size_5: "tall"
-    }
-  };
-
-  const rawProject2 = {
-    title: { rendered: "Poole Dorset" },
-    slug: "poole-dorset",
-    acf: {
+      gallery: [
+        { image: { url: "/assets/images/project-1-1.jpeg" }, size: "tall" },
+        { image: { url: "/assets/images/project-1-2.jpeg" }, size: "regular" },
+        { image: { url: "/assets/images/project-1-3.jpeg" }, size: "wide" },
+        { image: { url: "/assets/images/project-1-4.jpeg" }, size: "regular" },
+        { image: { url: "/assets/images/project-1-5.jpeg" }, size: "tall" }
+      ]
+    },
+    {
+      title: "Poole Dorset",
       tag: "COMMERCIAL",
       year: "2024",
       description: "Bringing warmth and tactility to a workspace.",
       intro_text_1: "A local creative agency needed a workspace that felt less like an office and more like a home. They wanted a space that fostered creativity and comfort for their growing team.",
       intro_text_2: "By introducing soft textiles, warm wood tones, and residential-style lighting, we transformed the clinical office into a welcoming studio environment.",
-      featured_image: "/assets/images/unknown.jpeg",
-      // Numbered gallery fields
-      gallery_image_1: "/assets/images/unknown.jpeg",
-      gallery_size_1: "wide",
-      gallery_image_2: "/assets/images/unknown.jpeg",
-      gallery_size_2: "tall"
+      gallery: [
+        { image: { url: "/assets/images/project-2-1.jpeg" }, size: "wide" },
+        { image: { url: "/assets/images/project-2-2.jpeg" }, size: "tall" }
+      ]
     }
-  };
+  ];
 
-  const fallbackPosts = [rawProject1, rawProject2];
-
-  // Fetch live posts
-  let livePosts = [];
   try {
     const res = await fetch(API_URL);
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      // Filter out empty/default posts like "Hello World" by checking if they actually filled out the ACF 'tag'
-      livePosts = data.filter(post => post.acf && post.acf.tag && post.acf.tag.trim() !== "");
-    }
-  } catch (err) {
-    console.warn("[wp_projects] Failed to fetch live posts", err);
-  }
-
-  // Use live posts if they exist, otherwise use fallback dummy posts so the site doesn't break
-  const rawPostsToUse = livePosts.length > 0 ? livePosts : fallbackPosts;
-
-  // Helper to bundle numbered fields into a gallery array
-  const parseGallery = (acf) => {
-    const gallery = [];
-    if (!acf) return gallery;
-    for (let i = 1; i <= 15; i++) {
-      const img = acf[`gallery_image_${i}`];
-      const size = acf[`gallery_size_${i}`];
-      if (img) {
-        gallery.push({
-          image: img,
-          size: size || 'regular' // Default to regular if they forget
-        });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.docs && data.docs.length > 0) {
+        rawProjects = data.docs;
       }
     }
-    return gallery;
-  };
+  } catch (e) {
+    console.log("Could not connect to Payload Projects API. Using dummy data.");
+  }
 
-  // Map the raw WordPress posts to the exact structure the Eleventy frontend expects
-  const projects = rawPostsToUse.map(post => {
+  // Transform raw data into the format Eleventy expects
+  const transformedProjects = rawProjects.map((post) => {
+    const slug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    
+    // Fallback if gallery isn't set or is empty
+    const galleryItems = post.gallery && post.gallery.length > 0 
+      ? post.gallery.map(item => ({
+          url: item.image?.url || "/assets/images/unknown.jpeg",
+          size: item.size
+        }))
+      : [];
+
     return {
-      title: post.title.rendered,
-      slug: post.slug,
-      url: `/projects/${post.slug}/`,
-      tag: post.acf.tag,
-      year: post.acf.year,
-      description: post.acf.description,
-      intro_text_1: post.acf.intro_text_1,
-      intro_text_2: post.acf.intro_text_2,
-      // If live featured image is missing, you could fall back to a placeholder, but this expects ACF featured_image field
-      featured_image: post.acf.featured_image || "/assets/images/unknown.jpeg",
-      gallery: parseGallery(post.acf)
+      title: post.title,
+      slug: slug,
+      tag: post.tag || "PROJECT",
+      year: post.year || new Date().getFullYear().toString(),
+      description: post.description || "",
+      introText1: post.intro_text_1 || "",
+      introText2: post.intro_text_2 || "",
+      // The first gallery image is used as the cover
+      featuredImage: galleryItems.length > 0 ? galleryItems[0].url : "/assets/images/unknown.jpeg",
+      gallery: galleryItems
     };
   });
 
-  return projects;
+  return transformedProjects;
 };
