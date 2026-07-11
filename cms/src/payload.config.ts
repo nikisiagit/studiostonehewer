@@ -51,11 +51,17 @@ const cloudflare =
 export default buildConfig({
   admin: {
     user: Users.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
     meta: {
       titleSuffix: '- Studio Stonehewer',
     },
-    importMap: {
-      baseDir: path.resolve(dirname),
+    components: {
+      graphics: {
+        Logo: '/components/Logo#Logo',
+        Icon: '/components/Icon#Icon',
+      },
     },
   },
   collections: [Users, Media, Projects],
