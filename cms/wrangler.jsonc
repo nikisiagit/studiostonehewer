@@ -23,6 +23,12 @@
       "remote": true,
     },
   ],
+  "routes": [
+    {
+      "pattern": "admin.studiostonehewer.co.uk",
+      "custom_domain": true
+    }
+  ],
   "services": [
     // The service should match the "name" of your worker
     // {
