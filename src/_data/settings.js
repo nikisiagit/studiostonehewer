@@ -6,9 +6,9 @@ module.exports = async function() {
   const rawNavLinks = `PROJECTS | /projects/\nSTUDIO | /#studio\nABOUT | /#about\nCONTACT | /#contact`;
 
   let settings = {
-    siteTitle: "Studio Stonehewer",
-    siteDescription: "Interior design rooted in curated and expressive moments to tell the stories of your home.",
-    navLinks: rawNavLinks.split('\n').filter(l => l.trim()).map(line => {
+    site_title: "Studio Stonehewer",
+    site_description: "Interior design rooted in curated and expressive moments to tell the stories of your home.",
+    nav_links: rawNavLinks.split('\n').filter(l => l.trim()).map(line => {
       const [label, url] = line.split('|').map(s => s.trim());
       return { label, url };
     }),
@@ -20,7 +20,7 @@ module.exports = async function() {
     if (res.ok) {
       const data = await res.json();
       if (data && data.site_title) {
-        let parsedNavLinks = settings.navLinks;
+        let parsedNavLinks = settings.nav_links;
         if (data.nav_links) {
           parsedNavLinks = data.nav_links.split('\n').filter(l => l.trim()).map(line => {
             const [label, url] = line.split('|').map(s => s.trim());
@@ -33,9 +33,9 @@ module.exports = async function() {
         }
         
         settings = {
-          siteTitle: data.site_title || settings.siteTitle,
-          siteDescription: data.site_description || settings.siteDescription,
-          navLinks: parsedNavLinks,
+          site_title: data.site_title || settings.site_title,
+          site_description: data.site_description || settings.site_description,
+          nav_links: parsedNavLinks,
           nav_logo: navLogoUrl
         };
       }
