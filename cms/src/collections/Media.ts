@@ -1,9 +1,13 @@
 import type { CollectionConfig } from 'payload'
+import { triggerBuildCollection } from '../hooks/triggerBuild'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [triggerBuildCollection],
   },
   fields: [
     {

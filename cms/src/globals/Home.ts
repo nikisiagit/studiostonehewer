@@ -1,9 +1,13 @@
 import type { GlobalConfig } from 'payload'
+import { triggerBuildGlobal } from '../hooks/triggerBuild'
 
 export const Home: GlobalConfig = {
   slug: 'home',
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [triggerBuildGlobal],
   },
   fields: [
     {

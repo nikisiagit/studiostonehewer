@@ -1,9 +1,13 @@
 import type { GlobalConfig } from 'payload'
+import { triggerBuildGlobal } from '../hooks/triggerBuild'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [triggerBuildGlobal],
   },
   fields: [
     { name: 'site_title', type: 'text' },

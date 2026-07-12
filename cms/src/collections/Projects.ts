@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { triggerBuildCollection } from '../hooks/triggerBuild'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -7,6 +8,9 @@ export const Projects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+  },
+  hooks: {
+    afterChange: [triggerBuildCollection],
   },
   fields: [
     {
