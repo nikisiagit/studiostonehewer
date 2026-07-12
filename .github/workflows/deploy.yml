@@ -29,7 +29,7 @@ jobs:
       - name: Build Eleventy
         run: npm run build
         env:
-          PAYLOAD_API_URL: https://my-app.nikitavo.workers.dev
+          PAYLOAD_API_URL: https://admin.studiostonehewer.co.uk
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
