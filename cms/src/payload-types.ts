@@ -441,6 +441,7 @@ export interface SiteSetting {
   id: number;
   site_title?: string | null;
   site_description?: string | null;
+  nav_logo?: (number | null) | Media;
   /**
    * Format: LABEL | /url
    */
@@ -514,6 +515,7 @@ export interface PortfolioSelect<T extends boolean = true> {
 export interface SiteSettingsSelect<T extends boolean = true> {
   site_title?: T;
   site_description?: T;
+  nav_logo?: T;
   nav_links?: T;
   updatedAt?: T;
   createdAt?: T;

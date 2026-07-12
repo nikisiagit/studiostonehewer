@@ -27,12 +27,16 @@ module.exports = async function() {
             return { label, url };
           });
         }
+        let navLogoUrl = settings.nav_logo;
+        if (data.nav_logo && data.nav_logo.url) {
+          navLogoUrl = data.nav_logo.url.startsWith('http') ? data.nav_logo.url : `${BASE_URL}${data.nav_logo.url}`;
+        }
         
         settings = {
           siteTitle: data.site_title || settings.siteTitle,
           siteDescription: data.site_description || settings.siteDescription,
           navLinks: parsedNavLinks,
-          nav_logo: data.nav_logo?.url || settings.nav_logo
+          nav_logo: navLogoUrl
         };
       }
     }
