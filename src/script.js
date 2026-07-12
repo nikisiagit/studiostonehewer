@@ -108,4 +108,34 @@ document.addEventListener('DOMContentLoaded', () => {
   reveals.forEach(reveal => {
     revealOnScroll.observe(reveal);
   });
+
+  // Payload CMS Live Preview Handling
+  window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'payload-live-preview') {
+      const data = event.data.data;
+      if (!data) return;
+      
+      // Generic DOM updater based on data-live-preview attribute
+      document.querySelectorAll('[data-live-preview]').forEach(el => {
+        const fieldName = el.getAttribute('data-live-preview');
+        if (data[fieldName] !== undefined) {
+          if (el.tagName === 'IMG') {
+            el.src = data[fieldName]?.url || el.src;
+          } else {
+            el.textContent = data[fieldName];
+          }
+        }
+      });
+
+      // Specific fallbacks for the home page if no data attributes exist
+      if (data.quote_text) {
+        const quoteEl = document.querySelector('.quote-section blockquote');
+        if (quoteEl) quoteEl.textContent = `"${data.quote_text}"`;
+      }
+      if (data.studio_description) {
+        const studioDesc = document.querySelector('.studio-description');
+        if (studioDesc) studioDesc.textContent = data.studio_description;
+      }
+    }
+  });
 });

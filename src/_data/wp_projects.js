@@ -74,7 +74,8 @@ module.exports = async function() {
       // The first gallery image is used as the cover
       featuredImage: galleryItems.length > 0 ? galleryItems[0].url : "/assets/images/unknown.jpeg",
       featured_image: galleryItems.length > 0 ? galleryItems[0].url : "/assets/images/unknown.jpeg",
-      gallery: galleryItems
+      gallery: galleryItems,
+      meta: post.meta || {}
     };
   });
 

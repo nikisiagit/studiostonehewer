@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
-
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
@@ -63,6 +63,17 @@ export default buildConfig({
         Icon: './components/Icon#Icon',
       },
     },
+    livePreview: {
+      url: ({ data, documentInfo }) => {
+        const baseUrl = 'https://studiostonehewer.co.uk'
+        if (documentInfo.slug === 'home') return baseUrl
+        if (documentInfo.slug === 'portfolio') return `${baseUrl}/portfolio`
+        if (documentInfo.slug === 'projects') return `${baseUrl}/projects/${data.slug}`
+        return baseUrl
+      },
+      collections: ['projects'],
+      globals: ['home', 'portfolio'],
+    },
   },
   collections: [Users, Media, Projects],
   globals: [Home, Portfolio, SiteSettings],
@@ -79,6 +90,13 @@ export default buildConfig({
     r2Storage({
       bucket: cloudflare.env.R2,
       collections: { media: true },
+    }),
+    seoPlugin({
+      collections: ['projects'],
+      globals: ['home', 'portfolio'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }: any) => `Studio Stonehewer | ${doc?.title || 'Page'}`,
+      generateDescription: ({ doc }: any) => doc?.description || 'Studio Stonehewer',
     }),
   ],
 })

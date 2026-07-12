@@ -112,7 +112,8 @@ module.exports = async function() {
           contactTitle: homeData.contact_title || home.contactTitle,
           contactDescription: homeData.contact_description || home.contactDescription,
           contactEmail: homeData.contact_email || home.contactEmail,
-          contactInstagram: homeData.contact_instagram || home.contactInstagram
+          contactInstagram: homeData.contact_instagram || home.contactInstagram,
+          meta: homeData.meta || {}
         };
       }
       
@@ -121,7 +122,8 @@ module.exports = async function() {
           seoDescription: portData.seo_description || portfolio.seoDescription,
           subtitle: portData.subtitle || portfolio.subtitle,
           headerTitle: portData.header_title || portfolio.headerTitle,
-          headerDescription: portData.header_description || portfolio.headerDescription
+          headerDescription: portData.header_description || portfolio.headerDescription,
+          meta: portData.meta || {}
         };
       }
     }

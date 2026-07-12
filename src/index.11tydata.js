@@ -1,5 +1,11 @@
 module.exports = {
   eleventyComputed: {
+    seo_title: data => data.wp_pages.home.meta?.title,
+    seo_description: data => data.wp_pages.home.meta?.description,
+    seo_image: data => {
+      const img = data.wp_pages.home.meta?.image;
+      return img?.url ? img.url : null;
+    },
     hero_left_image: data => data.wp_pages.home.heroLeftImage,
     hero_left_caption: data => data.wp_pages.home.heroLeftCaption,
     hero_right_image: data => data.wp_pages.home.heroRightImage,
