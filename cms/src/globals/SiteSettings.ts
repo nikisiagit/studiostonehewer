@@ -9,6 +9,11 @@ export const SiteSettings: GlobalConfig = {
     { name: 'site_title', type: 'text' },
     { name: 'site_description', type: 'textarea' },
     {
+      name: 'nav_logo',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'nav_links',
       type: 'textarea',
       admin: {

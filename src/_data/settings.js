@@ -11,7 +11,8 @@ module.exports = async function() {
     navLinks: rawNavLinks.split('\n').filter(l => l.trim()).map(line => {
       const [label, url] = line.split('|').map(s => s.trim());
       return { label, url };
-    })
+    }),
+    nav_logo: "/images/hero-logo.png" // default placeholder
   };
 
   try {
@@ -30,7 +31,8 @@ module.exports = async function() {
         settings = {
           siteTitle: data.site_title || settings.siteTitle,
           siteDescription: data.site_description || settings.siteDescription,
-          navLinks: parsedNavLinks
+          navLinks: parsedNavLinks,
+          nav_logo: data.nav_logo?.url || settings.nav_logo
         };
       }
     }
