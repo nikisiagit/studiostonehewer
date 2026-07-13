@@ -63,17 +63,6 @@ export default buildConfig({
         Icon: './components/Icon#Icon',
       },
     },
-    livePreview: {
-      url: ({ data, documentInfo }) => {
-        const baseUrl = 'https://studiostonehewer.co.uk'
-        if (documentInfo.slug === 'home') return baseUrl
-        if (documentInfo.slug === 'portfolio') return `${baseUrl}/portfolio`
-        if (documentInfo.slug === 'projects') return `${baseUrl}/projects/${data.slug}`
-        return baseUrl
-      },
-      collections: ['projects'],
-      globals: ['home', 'portfolio'],
-    },
   },
   collections: [Users, Media, Projects],
   globals: [Home, Portfolio, SiteSettings],
