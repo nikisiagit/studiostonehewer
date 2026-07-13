@@ -194,6 +194,14 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -331,6 +339,13 @@ export interface ProjectsSelect<T extends boolean = true> {
         size?: T;
         id?: T;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -411,12 +426,26 @@ export interface Home {
   about_role?: string | null;
   about_name?: string | null;
   about_body?: string | null;
-  guides?: string | null;
+  guides?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   contact_subtitle?: string | null;
   contact_title?: string | null;
   contact_description?: string | null;
   contact_email?: string | null;
   contact_instagram?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -430,6 +459,14 @@ export interface Portfolio {
   subtitle?: string | null;
   header_title?: string | null;
   header_description?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -485,12 +522,25 @@ export interface HomeSelect<T extends boolean = true> {
   about_role?: T;
   about_name?: T;
   about_body?: T;
-  guides?: T;
+  guides?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
   contact_subtitle?: T;
   contact_title?: T;
   contact_description?: T;
   contact_email?: T;
   contact_instagram?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -504,6 +554,13 @@ export interface PortfolioSelect<T extends boolean = true> {
   subtitle?: T;
   header_title?: T;
   header_description?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

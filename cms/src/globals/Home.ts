@@ -87,7 +87,14 @@ export const Home: GlobalConfig = {
             { name: 'about_role', type: 'text' },
             { name: 'about_name', type: 'text' },
             { name: 'about_body', type: 'textarea' },
-            { name: 'guides', type: 'textarea' },
+            {
+              name: 'guides',
+              type: 'array',
+              fields: [
+                { name: 'title', type: 'text' },
+                { name: 'description', type: 'textarea' }
+              ]
+            },
           ],
         },
         {
