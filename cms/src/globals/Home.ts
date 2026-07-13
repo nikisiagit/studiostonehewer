@@ -9,11 +9,6 @@ export const Home: GlobalConfig = {
   hooks: {
     afterChange: [triggerBuildGlobal],
   },
-  admin: {
-    livePreview: {
-      url: 'https://studiostonehewer.co.uk',
-    },
-  },
   fields: [
     {
       type: 'tabs',

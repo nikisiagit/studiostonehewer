@@ -9,11 +9,6 @@ export const Portfolio: GlobalConfig = {
   hooks: {
     afterChange: [triggerBuildGlobal],
   },
-  admin: {
-    livePreview: {
-      url: 'https://studiostonehewer.co.uk/portfolio',
-    },
-  },
   fields: [
     { name: 'seo_description', type: 'textarea' },
     { name: 'subtitle', type: 'text' },

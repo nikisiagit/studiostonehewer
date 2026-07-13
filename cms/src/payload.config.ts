@@ -63,6 +63,21 @@ export default buildConfig({
         Icon: './components/Icon#Icon',
       },
     },
+    livePreview: {
+      collections: ['projects'],
+      globals: ['home', 'portfolio'],
+      url: ({ data, globalConfig, collectionConfig }) => {
+        const baseUrl = 'https://studiostonehewer.co.uk'
+        if (globalConfig?.slug === 'home') return baseUrl
+        if (globalConfig?.slug === 'portfolio') return `${baseUrl}/portfolio`
+        if (collectionConfig?.slug === 'projects') {
+          const title = data?.title || ''
+          const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+          return `${baseUrl}/projects/${slug}`
+        }
+        return baseUrl
+      },
+    },
   },
   collections: [Users, Media, Projects],
   globals: [Home, Portfolio, SiteSettings],
@@ -84,7 +99,6 @@ export default buildConfig({
       collections: ['projects'],
       globals: ['home', 'portfolio'],
       uploadsCollection: 'media',
-      tabbedUI: true,
       generateTitle: ({ doc }: any) => `Studio Stonehewer | ${doc?.title || 'Page'}`,
       generateDescription: ({ doc }: any) => doc?.description || 'Studio Stonehewer',
     }),
