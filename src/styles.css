@@ -98,6 +98,13 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: opacity 0.6s ease, transform 0.6s ease, background-color 0.6s ease;
+  transform: translateY(0);
+}
+.navbar.hidden {
+  opacity: 0 !important;
+  transform: translateY(-100%);
+  pointer-events: none;
 }
 .hero-nav {
   position: fixed;
@@ -106,13 +113,6 @@ a {
   width: 100%;
   background-color: transparent;
   color: white;
-  transition: opacity 0.6s ease, transform 0.6s ease, background-color 0.6s ease;
-  transform: translateY(0);
-}
-.hero-nav.hidden {
-  opacity: 0 !important;
-  transform: translateY(-100%);
-  pointer-events: none;
 }
 .hero-nav.scrolling-up {
   background-color: rgba(0, 0, 0, 0.85);

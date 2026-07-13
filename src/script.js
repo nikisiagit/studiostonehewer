@@ -30,41 +30,34 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
   });
 
-  // Fade out hero nav on scroll down, fade in on scroll up
-  const heroNav = document.querySelector('.hero-nav');
+  // Fade out nav on scroll down, fade in on scroll up
+  const navbars = document.querySelectorAll('.navbar');
   let lastScrollY = window.scrollY;
 
   window.addEventListener('scroll', () => {
-    if (heroNav) {
-      const currentScrollY = window.scrollY;
-      
+    const currentScrollY = window.scrollY;
+    
+    navbars.forEach(navbar => {
       if (currentScrollY < 50) {
         // At top
-        heroNav.classList.remove('hidden');
-        heroNav.classList.remove('scrolling-up');
-        heroNav.style.opacity = 1;
+        navbar.classList.remove('hidden');
+        navbar.classList.remove('scrolling-up');
+        navbar.classList.remove('scrolled');
+        navbar.style.opacity = 1;
       } else if (currentScrollY > lastScrollY) {
         // Scrolling down
-        heroNav.classList.add('hidden');
-        heroNav.classList.remove('scrolling-up');
+        navbar.classList.add('hidden');
+        navbar.classList.remove('scrolling-up');
+        navbar.classList.add('scrolled');
       } else {
         // Scrolling up
-        heroNav.classList.remove('hidden');
-        heroNav.classList.add('scrolling-up');
-        heroNav.style.opacity = 1;
+        navbar.classList.remove('hidden');
+        navbar.classList.add('scrolling-up');
+        navbar.classList.add('scrolled');
+        navbar.style.opacity = 1;
       }
-      lastScrollY = currentScrollY;
-    }
-  });
-
-  // Nav Scroll Effect
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
+    });
+    lastScrollY = currentScrollY;
   });
 
   // Mobile Menu Toggle
