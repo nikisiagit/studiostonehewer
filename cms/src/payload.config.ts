@@ -95,6 +95,7 @@ export default buildConfig({
       collections: ['projects'],
       globals: ['home', 'portfolio'],
       uploadsCollection: 'media',
+      tabbedUI: true,
       generateTitle: ({ doc }: any) => `Studio Stonehewer | ${doc?.title || 'Page'}`,
       generateDescription: ({ doc }: any) => doc?.description || 'Studio Stonehewer',
     }),

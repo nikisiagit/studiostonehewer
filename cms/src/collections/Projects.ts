@@ -8,6 +8,9 @@ export const Projects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    livePreview: {
+      url: ({ data }) => `https://studiostonehewer.co.uk/projects/${data?.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') || ''}`,
+    },
   },
   hooks: {
     afterChange: [triggerBuildCollection],
