@@ -13,6 +13,19 @@ layout: base.njk
   
   <div class="project-cards">
     {% for project in wp_projects %}
+    {% if project.slug == 'poole-dorset' %}
+    <div class="project-card">
+      <div class="project-card-img-wrap">
+        <span class="project-tag">{{ project.tag }}</span>
+        <img src="{{ project.featured_image | resizeImage(800, 80) }}" alt="{{ project.title }}" loading="lazy" decoding="async" class="project-card-img">
+      </div>
+      <div class="project-card-info">
+        <h3 class="project-card-title">{{ project.title }}</h3>
+        <p class="project-card-meta">{{ project.tag }} • {{ project.category }} • {{ project.year }}</p>
+        <p class="project-card-desc">{{ project.description }}</p>
+      </div>
+    </div>
+    {% else %}
     <a href="/projects/{{ project.slug | slugify }}/" class="project-card">
       <div class="project-card-img-wrap">
         <span class="project-tag">{{ project.tag }}</span>
@@ -24,6 +37,7 @@ layout: base.njk
         <p class="project-card-desc">{{ project.description }}</p>
       </div>
     </a>
+    {% endif %}
     {% endfor %}
   </div>
 </section>

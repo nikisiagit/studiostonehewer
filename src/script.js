@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Custom Cursor (mouse devices only — skip the rAF loop on touch)
   const cursor = document.querySelector('.cursor');
   if (window.matchMedia('(pointer: fine)').matches) {
-  const interactables = document.querySelectorAll('a, button, .hero-logo, .about-image img, .project-card-img, .full-width-img, .masonry-item, .project-header-img');
+  const interactables = document.querySelectorAll('a, button, .hero-logo, .about-image img, a .project-card-img, .full-width-img, .masonry-item, .project-header-img');
 
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;

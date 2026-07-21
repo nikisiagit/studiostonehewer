@@ -36,20 +36,15 @@ const triggerGitHubAction = async (docTitle: string, type: 'global' | 'collectio
 }
 
 export const triggerBuildGlobal: GlobalAfterChangeHook = async ({ doc, req }) => {
-  if (req.transactionID) {
-    // only trigger on successful save
-    req.payload.logger.info(`Triggering build for Global update`)
-    await triggerGitHubAction('Global', 'global')
-  }
+  req.payload.logger.info(`Triggering build for Global update`)
+  await triggerGitHubAction('Global', 'global')
   return doc
 }
 
 export const triggerBuildCollection: CollectionAfterChangeHook = async ({ doc, req, operation }) => {
   if (operation === 'create' || operation === 'update') {
-    if (req.transactionID) {
-      req.payload.logger.info(`Triggering build for Collection update`)
-      await triggerGitHubAction(doc?.title || doc?.filename || 'Document', 'collection')
-    }
+    req.payload.logger.info(`Triggering build for Collection update`)
+    await triggerGitHubAction(doc?.title || doc?.filename || 'Document', 'collection')
   }
   return doc
 }

@@ -335,7 +335,7 @@ blockquote {
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
 }
-a.project-card {
+.project-card {
   display: flex;
   flex-direction: column;
   color: inherit;
