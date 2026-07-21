@@ -2,22 +2,22 @@
 layout: base.njk
 ---
   <header class="project-header container reveal">
-    <h4 class="section-subtitle">PROJECTS / {{ category }}</h4>
-    <h1 class="project-title">{{ title }}</h1>
-    <p class="project-meta">{{ tag }} • {{ category }} • {{ year }}</p>
+    <h4 class="section-subtitle">PROJECTS{% if project.category %} / {{ project.category }}{% endif %}</h4>
+    <h1 class="project-title">{{ project.title }}</h1>
+    <p class="project-meta">{{ project.tag }}{% if project.category %} • {{ project.category }}{% endif %} • {{ project.year }}</p>
     <div class="project-header-img-wrap">
-      <img src="{{ featured_image }}" alt="{{ title }}" class="project-header-img">
+      <img src="{{ project.featured_image | resizeImage(1600, 85) }}" alt="{{ project.title }}" class="project-header-img">
     </div>
     <div class="project-intro-text">
-      {% if intro_text_1 %}<p>{{ intro_text_1 }}</p>{% endif %}
-      {% if intro_text_2 %}<p>{{ intro_text_2 }}</p>{% endif %}
+      {% if project.introText1 %}<p>{{ project.introText1 }}</p>{% endif %}
+      {% if project.introText2 %}<p>{{ project.introText2 }}</p>{% endif %}
     </div>
   </header>
 
   <section class="project-gallery container reveal">
     <div class="masonry-grid">
-      {% for item in gallery %}
-      <img src="{{ item.image }}" class="masonry-item {% if item.size != 'regular' %}{{ item.size }}{% endif %}">
+      {% for item in project.gallery %}
+      <img src="{{ item.url | resizeImage(1200, 80) }}" alt="" loading="lazy" decoding="async" class="masonry-item {% if item.size != 'regular' %}{{ item.size }}{% endif %}">
       {% endfor %}
     </div>
   </section>

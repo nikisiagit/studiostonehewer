@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Custom Cursor
+  // Custom Cursor (mouse devices only — skip the rAF loop on touch)
   const cursor = document.querySelector('.cursor');
+  if (window.matchMedia('(pointer: fine)').matches) {
   const interactables = document.querySelectorAll('a, button, .hero-logo, .about-image img, .project-card-img, .full-width-img, .masonry-item, .project-header-img');
 
   let mouseX = window.innerWidth / 2;
@@ -29,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
   });
+  } else if (cursor) {
+    cursor.style.display = 'none';
+  }
 
   // Fade out nav on scroll down, fade in on scroll up
   const navbars = document.querySelectorAll('.navbar');

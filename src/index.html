@@ -5,16 +5,16 @@ title: Studio Stonehewer
 ---
   <!-- Hero & Quote -->
   <section id="home" class="hero-banner-section reveal">
-    <a href="{{ hero_left_url | default: '#' }}" class="hero-half left" style="background-image: url('{{ hero_left_image }}');">
+    <a href="{{ hero_left_url | default: '#' }}" class="hero-half left" style="background-image: url('{{ hero_left_image | resizeImage: 1200, 85 }}');">
       <div class="hero-half-caption">{{ hero_left_caption }}</div>
     </a>
-    <a href="{{ hero_right_url | default: '#' }}" class="hero-half right" style="background-image: url('{{ hero_right_image }}');">
+    <a href="{{ hero_right_url | default: '#' }}" class="hero-half right" style="background-image: url('{{ hero_right_image | resizeImage: 1200, 85 }}');">
       <div class="hero-half-caption">{{ hero_right_caption }}</div>
     </a>
     
     <nav class="navbar hero-nav">
       <a href="index.html" class="nav-brand">
-        <img src="{{ settings.nav_logo }}" alt="Studio Stonehewer Logo" class="nav-logo">
+        <img src="{{ settings.nav_logo | resizeImage: 300, 90 }}" alt="Studio Stonehewer Logo" class="nav-logo">
         <span>STUDIO<br>STONEHEWER</span>
       </a>
       <div class="menu-toggle" id="mobile-menu">
@@ -69,7 +69,7 @@ title: Studio Stonehewer
       <a href="/projects/{{ project.slug | slugify }}/" class="project-card">
         <div class="project-card-img-wrap">
           <span class="project-tag">{{ project.tag }}</span>
-          <img src="{{ project.featured_image }}" alt="{{ project.title }}" class="project-card-img">
+          <img src="{{ project.featured_image | resizeImage: 800, 80 }}" alt="{{ project.title }}" loading="lazy" decoding="async" class="project-card-img">
         </div>
         <div class="project-card-info">
           <h3 class="project-card-title">{{ project.title }}</h3>
@@ -88,7 +88,7 @@ title: Studio Stonehewer
       <h2 class="section-title">{{ hww_title }}</h2>
       <p class="how-we-work-desc">{{ hww_description }}</p>
       
-      <img src="{{ hww_image }}" alt="How we work interior" class="full-width-img">
+      <img src="{{ hww_image | resizeImage: 1200, 80 }}" alt="How we work interior" loading="lazy" decoding="async" class="full-width-img">
     </div>
 
     <div class="services-section container">
@@ -140,7 +140,7 @@ title: Studio Stonehewer
     </div>
     <div class="about-grid">
       <div class="about-image">
-        <img src="{{ about_image }}" alt="{{ about_name }}">
+        <img src="{{ about_image | resizeImage: 800, 80 }}" alt="{{ about_name }}" loading="lazy" decoding="async">
       </div>
       <div class="about-content">
         <h4 class="role">{{ about_role }}</h4>

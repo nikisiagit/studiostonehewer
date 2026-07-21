@@ -12,7 +12,14 @@
   <meta property="og:image" content="{{ seo_image | default(settings.site_image) }}">
   <meta property="og:type" content="website">
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="/styles.css">
+  {% if isHome %}
+  <link rel="preload" as="image" href="{{ hero_left_image | resizeImage(1200, 85) }}">
+  <link rel="preload" as="image" href="{{ hero_right_image | resizeImage(1200, 85) }}">
+  {% endif %}
 </head>
 <body>
   <div class="cursor"></div>
@@ -20,7 +27,7 @@
   {% if not isHome %}
   <nav class="navbar" style="position: sticky; background-color: var(--color-bg);">
     <a href="/" class="nav-brand">
-      <img src="{{ settings.nav_logo }}" alt="Studio Stonehewer Logo" class="nav-logo">
+      <img src="{{ settings.nav_logo | resizeImage(300, 90) }}" alt="Studio Stonehewer Logo" class="nav-logo">
       <span>STUDIO<br>STONEHEWER</span>
     </a>
     <div class="menu-toggle" id="mobile-menu">

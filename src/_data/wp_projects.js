@@ -63,17 +63,22 @@ module.exports = async function() {
         }))
       : [];
 
+    const featuredImageUrl = (galleryItems.length > 0 && galleryItems[0].url) 
+      ? galleryItems[0].url 
+      : "/assets/images/unknown.jpeg";
+
     return {
       title: post.title,
       slug: slug,
       tag: post.tag || "PROJECT",
+      category: post.category || "",
       year: post.year || new Date().getFullYear().toString(),
       description: post.description || "",
       introText1: post.intro_text_1 || "",
       introText2: post.intro_text_2 || "",
       // The first gallery image is used as the cover
-      featuredImage: galleryItems.length > 0 ? galleryItems[0].url : "/assets/images/unknown.jpeg",
-      featured_image: galleryItems.length > 0 ? galleryItems[0].url : "/assets/images/unknown.jpeg",
+      featuredImage: featuredImageUrl,
+      featured_image: featuredImageUrl,
       gallery: galleryItems,
       meta: post.meta || {}
     };
