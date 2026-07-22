@@ -32,6 +32,21 @@
     --theme-elevation-900: #2C2C2C; /* Dark charcoal headers */
     --theme-elevation-950: #1a1a1a;
   }
+
+  /* Custom overrides for dark mode theme */
+  html[data-theme="dark"] {
+    --theme-bg: #1c1c1a; /* Warm dark background */
+    --theme-elevation-0: #1c1c1a;
+    --theme-elevation-50: #1c1c1a;
+    --theme-elevation-100: #252522; /* Slightly lighter card/sidebar */
+    --theme-elevation-150: #2e2e2a;
+    --theme-elevation-200: #373732;
+    --theme-elevation-300: #42423c;
+    --theme-elevation-400: #55554e;
+    --theme-elevation-800: #FAF9F6; /* Ivory text */
+    --theme-elevation-900: #FFFFFF; /* Bright white headers */
+    --theme-elevation-950: #ffffff;
+  }
 }
 
 /* Custom CSS to elevate layout style */
