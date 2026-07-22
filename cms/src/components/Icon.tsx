@@ -5,14 +5,15 @@ export const Icon = () => (
   <div className="icon" style={{ 
     width: '32px', 
     height: '32px', 
-    borderRadius: '4px', 
-    background: '#1a1a1a', 
-    color: '#fff', 
+    borderRadius: '50%', 
+    background: 'var(--color-primary-500)', 
+    color: '#FAF9F6', 
     display: 'flex', 
     alignItems: 'center', 
     justifyContent: 'center',
-    fontWeight: 'bold',
-    fontSize: '18px'
+    fontWeight: '300',
+    fontFamily: 'var(--font-header)',
+    fontSize: '20px'
   }}>
     S
   </div>

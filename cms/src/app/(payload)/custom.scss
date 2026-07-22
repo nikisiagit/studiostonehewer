@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  /* Fonts */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-header: 'Cormorant Garamond', Georgia, serif;
+  
+  /* Color Palette - Studio Stonehewer Brand */
+  --color-primary-50: #fbf5f5;
+  --color-primary-100: #f6e6e6;
+  --color-primary-200: #eecfcf;
+  --color-primary-300: #e0acac;
+  --color-primary-400: #cd8181;
+  --color-primary-500: #a05252; /* Main Accent Red */
+  --color-primary-600: #934646;
+  --color-primary-700: #7b3838;
+  --color-primary-800: #663030;
+  --color-primary-900: #572c2c;
+  --color-primary-950: #2f1414;
+
+  /* Custom overrides for light mode theme */
+  html[data-theme="light"] {
+    --theme-bg: #FAF9F6; /* Studio Stonehewer ivory background */
+    --theme-elevation-0: #FAF9F6;
+    --theme-elevation-50: #FAF9F6;
+    --theme-elevation-100: #F3EFE9; /* Alternative sand color */
+    --theme-elevation-150: #ece7de;
+    --theme-elevation-200: #e2dbce;
+    --theme-elevation-300: #d5ccbe;
+    --theme-elevation-400: #c0b4a2;
+    --theme-elevation-800: #4A4A4A; /* Charcoal text */
+    --theme-elevation-900: #2C2C2C; /* Dark charcoal headers */
+    --theme-elevation-950: #1a1a1a;
+  }
+}
+
+/* Custom CSS to elevate layout style */
+.logo {
+  h2 {
+    font-family: var(--font-header) !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.08em !important;
+    color: var(--color-primary-500) !important;
+    text-transform: uppercase;
+    font-size: 20px !important;
+  }
+}
+
+/* Custom styles for Admin Sidebar & Navigation */
+.nav {
+  background-color: var(--theme-elevation-100) !important;
+  border-right: 1px solid var(--theme-elevation-200) !important;
+}
+
+.icon {
+  font-family: var(--font-header) !important;
+  background: var(--color-primary-500) !important;
+}
