@@ -38,8 +38,10 @@ module.exports = async function() {
   let home = {
     heroLeftImage: "https://admin.studiostonehewer.co.uk/api/media/file/oud-west-bedroom-pink-1.jpg",
     heroLeftCaption: "Amsterdam ",
+    heroLeftLink: "/projects/oud-west",
     heroRightImage: "https://admin.studiostonehewer.co.uk/api/media/file/poole-dorset-apartment.jpeg",
     heroRightCaption: "Poole Dorset",
+    heroRightLink: "#",
     quoteText: "I am unapologetically you. I am a visual, textural, and sensory story of your emotions and the world you want to create. I will provide a space for you to build and grow. Here, you will make memories and share stories. You will laugh, learn, and love. I will be a constant through the ordinary and extraordinary. I am your sanctuary. I am your home.",
     quoteAuthor: "'HOME' BY STUDIO STONEHEWER",
     studioSubtitle: "THE STUDIO",
@@ -95,8 +97,10 @@ module.exports = async function() {
         home = {
           heroLeftImage: getUrl(homeData.hero_left_image?.url) || home.heroLeftImage,
           heroLeftCaption: homeData.hero_left_caption || home.heroLeftCaption,
+          heroLeftLink: homeData.hero_left_link || "#",
           heroRightImage: getUrl(homeData.hero_right_image?.url) || home.heroRightImage,
           heroRightCaption: homeData.hero_right_caption || home.heroRightCaption,
+          heroRightLink: homeData.hero_right_link || "#",
           quoteText: homeData.quote_text || home.quoteText,
           quoteAuthor: homeData.quote_author || home.quoteAuthor,
           studioSubtitle: homeData.studio_subtitle || home.studioSubtitle,

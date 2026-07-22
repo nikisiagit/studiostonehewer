@@ -18,8 +18,22 @@ export const Home: GlobalConfig = {
           fields: [
             { name: 'hero_left_image', type: 'upload', relationTo: 'media' },
             { name: 'hero_left_caption', type: 'text' },
+            {
+              name: 'hero_left_link',
+              type: 'text',
+              admin: {
+                description: 'Link destination for the left hero. Use absolute URLs (e.g., https://example.com) for external sites, and relative paths (e.g., /projects/oud-west) for internal pages. Use # to disable linking.',
+              },
+            },
             { name: 'hero_right_image', type: 'upload', relationTo: 'media' },
             { name: 'hero_right_caption', type: 'text' },
+            {
+              name: 'hero_right_link',
+              type: 'text',
+              admin: {
+                description: 'Link destination for the right hero. Use absolute URLs (e.g., https://example.com) for external sites, and relative paths (e.g., /projects/poole-dorset) for internal pages. Use # to disable linking.',
+              },
+            },
           ],
         },
         {
