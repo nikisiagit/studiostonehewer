@@ -101,13 +101,25 @@ export const Home: GlobalConfig = {
             { name: 'about_role', type: 'text' },
             { name: 'about_name', type: 'text' },
             { name: 'about_body', type: 'textarea' },
+          ],
+        },
+        {
+          label: 'What Guides Us',
+          fields: [
             {
               name: 'guides',
               type: 'array',
+              labels: {
+                singular: 'Guide Item',
+                plural: 'Guide Items',
+              },
+              admin: {
+                description: 'Items displayed in the "What guides us" section on the homepage.',
+              },
               fields: [
-                { name: 'title', type: 'text' },
-                { name: 'description', type: 'textarea' }
-              ]
+                { name: 'title', type: 'text', required: true },
+                { name: 'description', type: 'textarea', required: true },
+              ],
             },
           ],
         },

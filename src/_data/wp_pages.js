@@ -21,7 +21,7 @@ module.exports = async function() {
         return { title, description: description || "" };
       });
     }
-    if (Array.isArray(guidesData)) {
+    if (Array.isArray(guidesData) && guidesData.length > 0) {
       return guidesData.map(item => ({
         title: item.title || "",
         description: item.description || ""
@@ -33,7 +33,7 @@ module.exports = async function() {
   const rawVirtualExpectations = `A design questionnaire to get to know you\n60 minutes of 1:1 virtual time with an interior designer\nOne moodboard plus one review per room\nOne 3D elevation plus one review per room\nColour and fabric consulting and guidance for each room\nA bespoke shopping list with a minimum of 10 items per room (based on your budget)`;
   const rawFullExpectations = `1:1 consultations — collaborating with you to ensure your new home incorporates all the elements you're looking for\nFull service review — working with your architect and construction team on space planning\nInterior concept — taking away the guesswork by selecting materials, colours, fabrics and finishes for you\nTurnkey installation — delivering the finishing touches, ensuring everything tells a bespoke story`;
   const rawAboutBody = `Amidst the hum of sewing machines, vibrant fabrics, explosions of colour, and warmth of peers, a young Eric discovered his passion for creating. From challenging beginnings, at the age of 14, he found a new home in the world of art — a way to transform the ordinary into the extraordinary.\nFrom those early days, Eric's eye for design was realised, beginning to cultivate bespoke spaces in every place he inhabited, each one a canvas for his boundless imagination. Whether it was a cosy nook or a grand moment, Eric's knack for crafting tailored experiences and unforgettable moments quickly became his signature.\nNow, Eric channels that same youthful, classic, and uninhibited enthusiasm into every project. His eye for detail and ability to blend functionality with elegance deliver the unique Studio Stonehewer experience.`;
-  const rawGuides = `Texture first | Material and tactility before decoration.\nQuiet luxury | Considered, lasting, never loud.\nPersonal moments | Adding visual touches of your personality to every space`;
+  const rawGuides = `Texture first | Material and tactility before decoration.\nQuiet luxury | Considered, lasting, never loud.\nMade for you | Every home shaped around its people.\nPersonal moments | Adding visual touches of your personality to every space.`;
 
   let home = {
     heroLeftImage: "https://admin.studiostonehewer.co.uk/api/media/file/oud-west-bedroom-pink-1.jpg",
@@ -127,7 +127,7 @@ module.exports = async function() {
           aboutRole: homeData.about_role || home.aboutRole,
           aboutName: homeData.about_name || home.aboutName,
           aboutBody: homeData.about_body ? splitText(homeData.about_body) : home.aboutBody,
-          guides: homeData.guides ? parseGuides(homeData.guides) : home.guides,
+          guides: (homeData.guides && parseGuides(homeData.guides).length > 0) ? parseGuides(homeData.guides) : home.guides,
           finalCtaTitle: homeData.final_cta_title || home.finalCtaTitle,
           contactSubtitle: homeData.contact_subtitle || home.contactSubtitle,
           contactTitle: homeData.contact_title || home.contactTitle,
