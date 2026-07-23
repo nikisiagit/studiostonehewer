@@ -5,6 +5,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.run(sql`ALTER TABLE \`home\` ADD \`hero_right_link\` text;`)
 }
 
-export async function down({ db }: MigrateDownArgs): Promise<void> {
+export async function down({ db: _db }: MigrateDownArgs): Promise<void> {
   // Down migration logic if needed
 }
