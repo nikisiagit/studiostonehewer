@@ -10,9 +10,9 @@ on:
       - wp_update
 
 jobs:
-  deploy:
+  deploy-cms:
     runs-on: ubuntu-latest
-    name: Deploy to Cloudflare Workers
+    name: Deploy Payload CMS Worker
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -20,7 +20,34 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Root Dependencies
+        run: npm ci || npm install
+
+      - name: Install CMS Dependencies
+        working-directory: ./cms
+        run: npm install
+
+      - name: Deploy CMS Worker
+        working-directory: ./cms
+        run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+  deploy-frontend:
+    needs: deploy-cms
+    runs-on: ubuntu-latest
+    name: Deploy Eleventy Site Worker
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
           cache: 'npm'
 
       - name: Install Dependencies
@@ -31,7 +58,8 @@ jobs:
         env:
           PAYLOAD_API_URL: https://admin.studiostonehewer.co.uk
 
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy Frontend to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
