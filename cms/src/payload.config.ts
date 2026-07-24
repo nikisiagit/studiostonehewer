@@ -83,6 +83,9 @@ export default buildConfig({
   globals: [Home, Portfolio, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
+  graphQL: {
+    disablePlaygroundInProduction: true,
+  },
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

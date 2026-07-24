@@ -8,9 +8,42 @@ on:
   repository_dispatch:
     types:
       - wp_update
+  pull_request:
+    branches:
+      - main
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Lint and unit tests
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Root Dependencies
+        run: npm ci || npm install
+
+      - name: Frontend unit tests
+        run: npm test
+
+      - name: Install CMS Dependencies
+        working-directory: ./cms
+        run: npm ci || npm install
+
+      - name: CMS lint
+        working-directory: ./cms
+        run: npm run lint
+        continue-on-error: true
+
   deploy-cms:
+    if: github.event_name != 'pull_request'
+    needs: test
     runs-on: ubuntu-latest
     name: Deploy Payload CMS Worker
     steps:
@@ -28,7 +61,7 @@ jobs:
 
       - name: Install CMS Dependencies
         working-directory: ./cms
-        run: npm install
+        run: npm ci || npm install
 
       - name: Deploy CMS Worker
         working-directory: ./cms
@@ -37,6 +70,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
   deploy-frontend:
+    if: github.event_name != 'pull_request'
     needs: deploy-cms
     runs-on: ubuntu-latest
     name: Deploy Eleventy Site Worker
@@ -57,9 +91,11 @@ jobs:
         run: npm run build
         env:
           PAYLOAD_API_URL: https://admin.studiostonehewer.co.uk
+          # Fail the build if Payload is unreachable (no dummy-content deploys)
+          STRICT_PAYLOAD: '1'
+          CI: 'true'
 
       - name: Deploy Frontend to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-

@@ -1,60 +1,91 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Custom Cursor (mouse devices only — skip the rAF loop on touch)
+  const LIVE_PREVIEW_ORIGINS = new Set([
+    'https://admin.studiostonehewer.co.uk',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+  ]);
+
+  // Custom Cursor (mouse devices only — pause when idle / tab hidden)
   const cursor = document.querySelector('.cursor');
-  if (window.matchMedia('(pointer: fine)').matches) {
-  const interactables = document.querySelectorAll('a, button, .hero-logo, .about-image img, a .project-card-img, .full-width-img, .masonry-item, .project-header-img');
+  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+    const interactables = document.querySelectorAll(
+      'a, button, .hero-logo, .about-image img, a .project-card-img, .full-width-img, .masonry-item, .project-header-img',
+    );
 
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let cursorX = mouseX;
-  let cursorY = mouseY;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    let rafId = null;
+    let running = false;
 
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
+    function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.15;
+      cursorY += (mouseY - cursorY) * 0.15;
+      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
 
-  function animateCursor() {
-    // Linear interpolation for smooth trailing effect
-    cursorX += (mouseX - cursorX) * 0.15;
-    cursorY += (mouseY - cursorY) * 0.15;
-    
-    // Apply via hardware-accelerated transform
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-    
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
+      const settled =
+        Math.abs(mouseX - cursorX) < 0.1 && Math.abs(mouseY - cursorY) < 0.1;
 
-  interactables.forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-  });
+      if (settled || document.hidden) {
+        running = false;
+        rafId = null;
+        return;
+      }
+      rafId = requestAnimationFrame(animateCursor);
+    }
+
+    function ensureAnimating() {
+      if (running || document.hidden) return;
+      running = true;
+      rafId = requestAnimationFrame(animateCursor);
+    }
+
+    document.addEventListener(
+      'mousemove',
+      (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        ensureAnimating();
+      },
+      { passive: true },
+    );
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+        running = false;
+      }
+    });
+
+    interactables.forEach((el) => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+    });
   } else if (cursor) {
     cursor.style.display = 'none';
   }
 
-  // Fade out nav on scroll down, fade in on scroll up
+  // Fade out nav on scroll down, fade in on scroll up (rAF-coalesced)
   const navbars = document.querySelectorAll('.navbar');
   let lastScrollY = window.scrollY;
+  let scrollTicking = false;
 
-  window.addEventListener('scroll', () => {
+  function updateNavOnScroll() {
     const currentScrollY = window.scrollY;
-    
-    navbars.forEach(navbar => {
+
+    navbars.forEach((navbar) => {
       if (currentScrollY < 50) {
-        // At top
         navbar.classList.remove('hidden');
         navbar.classList.remove('scrolling-up');
         navbar.classList.remove('scrolled');
         navbar.style.opacity = 1;
       } else if (currentScrollY > lastScrollY) {
-        // Scrolling down
         navbar.classList.add('hidden');
         navbar.classList.remove('scrolling-up');
         navbar.classList.add('scrolled');
       } else {
-        // Scrolling up
         navbar.classList.remove('hidden');
         navbar.classList.add('scrolling-up');
         navbar.classList.add('scrolled');
@@ -62,7 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     lastScrollY = currentScrollY;
-  });
+    scrollTicking = false;
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!scrollTicking) {
+        scrollTicking = true;
+        requestAnimationFrame(updateNavOnScroll);
+      }
+    },
+    { passive: true },
+  );
 
   // Mobile Menu Toggle
   const menuToggle = document.querySelector('#mobile-menu');
@@ -75,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.toggle('active');
     });
 
-    navItems.forEach(item => {
+    navItems.forEach((item) => {
       item.addEventListener('click', () => {
         menuToggle.classList.remove('is-active');
         navLinks.classList.remove('active');
@@ -88,51 +131,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const revealOptions = {
     threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
+    rootMargin: '0px 0px -50px 0px',
   };
 
-  const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-    entries.forEach(entry => {
+  const revealOnScroll = new IntersectionObserver(function (entries, observer) {
+    entries.forEach((entry) => {
       if (!entry.isIntersecting) {
         return;
-      } else {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
       }
+      entry.target.classList.add('active');
+      observer.unobserve(entry.target);
     });
   }, revealOptions);
 
-  reveals.forEach(reveal => {
+  reveals.forEach((reveal) => {
     revealOnScroll.observe(reveal);
   });
 
-  // Payload CMS Live Preview Handling
+  // Payload CMS Live Preview — only accept messages from the admin origin
   window.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'payload-live-preview') {
-      const data = event.data.data;
-      if (!data) return;
-      
-      // Generic DOM updater based on data-live-preview attribute
-      document.querySelectorAll('[data-live-preview]').forEach(el => {
-        const fieldName = el.getAttribute('data-live-preview');
-        if (data[fieldName] !== undefined) {
-          if (el.tagName === 'IMG') {
-            el.src = data[fieldName]?.url || el.src;
-          } else {
-            el.textContent = data[fieldName];
-          }
-        }
-      });
+    if (!LIVE_PREVIEW_ORIGINS.has(event.origin)) return;
+    if (!event.data || event.data.type !== 'payload-live-preview') return;
 
-      // Specific fallbacks for the home page if no data attributes exist
-      if (data.quote_text) {
-        const quoteEl = document.querySelector('.quote-section blockquote');
-        if (quoteEl) quoteEl.textContent = `"${data.quote_text}"`;
+    const data = event.data.data;
+    if (!data || typeof data !== 'object') return;
+
+    document.querySelectorAll('[data-live-preview]').forEach((el) => {
+      const fieldName = el.getAttribute('data-live-preview');
+      if (!fieldName || data[fieldName] === undefined) return;
+
+      if (el.tagName === 'IMG') {
+        const next = data[fieldName]?.url;
+        if (typeof next === 'string' && (/^https?:\/\//i.test(next) || next.startsWith('/'))) {
+          el.src = next;
+        }
+      } else if (typeof data[fieldName] === 'string' || typeof data[fieldName] === 'number') {
+        el.textContent = String(data[fieldName]);
       }
-      if (data.studio_description) {
-        const studioDesc = document.querySelector('.studio-description');
-        if (studioDesc) studioDesc.textContent = data.studio_description;
-      }
+    });
+
+    if (typeof data.quote_text === 'string') {
+      const quoteEl = document.querySelector('.quote-section blockquote');
+      if (quoteEl) quoteEl.textContent = `"${data.quote_text}"`;
+    }
+    if (typeof data.studio_description === 'string') {
+      const studioDesc = document.querySelector('.studio-description');
+      if (studioDesc) studioDesc.textContent = data.studio_description;
     }
   });
 });
