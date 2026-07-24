@@ -1,6 +1,6 @@
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
-const { sanitizeHref, isStrictPayload } = require('../src/_data/fetchUtils.js')
+const { sanitizeHref, isStrictPayload, toPublicMediaUrl } = require('../src/_data/fetchUtils.js')
 
 describe('sanitizeHref', () => {
   it('allows relative paths and hashes', () => {
@@ -39,6 +39,30 @@ describe('isStrictPayload', () => {
       else process.env.CI = prevCI
       if (prevStrict === undefined) delete process.env.STRICT_PAYLOAD
       else process.env.STRICT_PAYLOAD = prevStrict
+    }
+  })
+})
+
+describe('toPublicMediaUrl', () => {
+  it('rewrites Payload media paths to the R2 public host', () => {
+    const prev = process.env.MEDIA_PUBLIC_URL
+    const prevDisable = process.env.DISABLE_MEDIA_PUBLIC_URL
+    try {
+      delete process.env.DISABLE_MEDIA_PUBLIC_URL
+      process.env.MEDIA_PUBLIC_URL = 'https://media.studiostonehewer.co.uk'
+      assert.equal(
+        toPublicMediaUrl('https://admin.studiostonehewer.co.uk/api/media/file/hero.jpg'),
+        'https://media.studiostonehewer.co.uk/hero.jpg',
+      )
+      assert.equal(
+        toPublicMediaUrl('/api/media/file/logo.svg'),
+        'https://media.studiostonehewer.co.uk/logo.svg',
+      )
+    } finally {
+      if (prev === undefined) delete process.env.MEDIA_PUBLIC_URL
+      else process.env.MEDIA_PUBLIC_URL = prev
+      if (prevDisable === undefined) delete process.env.DISABLE_MEDIA_PUBLIC_URL
+      else process.env.DISABLE_MEDIA_PUBLIC_URL = prevDisable
     }
   })
 })

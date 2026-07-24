@@ -5,5 +5,17 @@ compatibility_date = "2026-07-12"
 [assets]
 directory = "_site"
 
+[observability]
+enabled = true
+
 [[send_email]]
 name = "EMAIL"
+
+# Workers Rate Limiting — contact form (5 requests / 60s per key, per colo)
+[[ratelimits]]
+name = "CONTACT_RATE_LIMITER"
+namespace_id = "87021"
+
+  [ratelimits.simple]
+  limit = 5
+  period = 60

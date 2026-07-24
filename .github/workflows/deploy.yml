@@ -94,6 +94,8 @@ jobs:
           # Fail the build if Payload is unreachable (no dummy-content deploys)
           STRICT_PAYLOAD: '1'
           CI: 'true'
+          # Serve CMS media from R2 custom domain (not the admin Worker)
+          MEDIA_PUBLIC_URL: https://media.studiostonehewer.co.uk
 
       - name: Deploy Frontend to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

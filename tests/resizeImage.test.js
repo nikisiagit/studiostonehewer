@@ -26,11 +26,11 @@ describe('resizeImage filter', () => {
     else process.env.DISABLE_CF_IMAGE_RESIZE = prev
   })
 
-  it('wraps remote URLs with cdn-cgi image options', () => {
+  it('wraps remote URLs with /_img/ worker image options', () => {
     delete process.env.DISABLE_CF_IMAGE_RESIZE
     const resizeImage = loadResizeFilter()
     const out = resizeImage('https://admin.example.com/api/media/file/a.jpg', 800, 80)
-    assert.match(out, /^\/cdn-cgi\/image\/width=800,quality=80,format=auto,fit=scale-down\//)
+    assert.match(out, /^\/_img\/width=800,quality=80,format=auto,fit=scale-down\//)
     assert.ok(out.endsWith('https://admin.example.com/api/media/file/a.jpg'))
   })
 

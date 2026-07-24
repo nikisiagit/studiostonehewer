@@ -11,6 +11,39 @@ function isStrictPayload() {
 }
 
 /**
+ * Public media host (R2 custom domain). When set, rewrites Payload media
+ * URLs off the admin worker onto the CDN edge.
+ * Example: https://media.studiostonehewer.co.uk
+ */
+function mediaPublicBase() {
+  const base = (process.env.MEDIA_PUBLIC_URL || 'https://media.studiostonehewer.co.uk').replace(
+    /\/$/,
+    '',
+  );
+  return base;
+}
+
+/**
+ * Rewrite Payload media file URLs to the public R2 custom domain when possible.
+ * /api/media/file/<filename> → https://media…/<filename>
+ */
+function toPublicMediaUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  if (process.env.DISABLE_MEDIA_PUBLIC_URL === '1') return url;
+
+  const base = mediaPublicBase();
+  // Absolute Payload media URL
+  const absMatch = url.match(/^https?:\/\/[^/]+\/api\/media\/file\/(.+)$/i);
+  if (absMatch) return `${base}/${absMatch[1]}`;
+
+  // Relative Payload media path
+  const relMatch = url.match(/^\/api\/media\/file\/(.+)$/i);
+  if (relMatch) return `${base}/${relMatch[1]}`;
+
+  return url;
+}
+
+/**
  * Fetch JSON with a timeout. In CI / STRICT_PAYLOAD mode, failures throw
  * so we never deploy the site with placeholder/dummy CMS content.
  */
@@ -57,4 +90,6 @@ module.exports = {
   isStrictPayload,
   fetchJson,
   sanitizeHref,
+  mediaPublicBase,
+  toPublicMediaUrl,
 };

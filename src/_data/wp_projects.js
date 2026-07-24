@@ -1,4 +1,4 @@
-const { fetchJson } = require('./fetchUtils');
+const { fetchJson, toPublicMediaUrl } = require('./fetchUtils');
 
 module.exports = async function () {
   const BASE_URL = process.env.PAYLOAD_API_URL || 'http://127.0.0.1:3000';
@@ -45,8 +45,8 @@ module.exports = async function () {
 
   const getUrl = (url) => {
     if (!url) return null;
-    if (url.startsWith('http')) return url;
-    return `${BASE_URL}${url}`;
+    if (url.startsWith('http')) return toPublicMediaUrl(url);
+    return toPublicMediaUrl(`${BASE_URL}${url}`);
   };
 
   const transformedProjects = rawProjects.map((post) => {

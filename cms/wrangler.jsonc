@@ -1,10 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "my-app",
+  // Renamed from my-app for clarity. Custom domain stays on admin.studiostonehewer.co.uk.
+  "name": "studiostonehewer-cms",
   "compatibility_date": "2026-07-12",
   "observability": {
-    "enabled": true
+    "enabled": true,
+    "head_sampling_rate": 1
   },
   "compatibility_flags": [
     // Enable Node.js API
@@ -36,7 +38,7 @@
     // The service should match the "name" of your worker
     // {
     //   "binding": "WORKER_SELF_REFERENCE",
-    //   "service": "my-app"
+    //   "service": "studiostonehewer-cms"
     // },
   ],
   "r2_buckets": [

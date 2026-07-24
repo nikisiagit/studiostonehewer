@@ -1,4 +1,4 @@
-const { fetchJson, sanitizeHref } = require('./fetchUtils');
+const { fetchJson, sanitizeHref, toPublicMediaUrl } = require('./fetchUtils');
 
 module.exports = async function () {
   const BASE_URL = process.env.PAYLOAD_API_URL || 'http://127.0.0.1:3000';
@@ -34,9 +34,10 @@ module.exports = async function () {
     }
     let navLogoUrl = settings.nav_logo;
     if (data.nav_logo && data.nav_logo.url) {
-      navLogoUrl = data.nav_logo.url.startsWith('http')
+      const raw = data.nav_logo.url.startsWith('http')
         ? data.nav_logo.url
         : `${BASE_URL}${data.nav_logo.url}`;
+      navLogoUrl = toPublicMediaUrl(raw);
     }
 
     settings = {

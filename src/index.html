@@ -218,8 +218,17 @@ title: Studio Stonehewer
             <label for="message">MESSAGE</label>
             <textarea id="message" name="message" rows="4" placeholder="Tell us about your project..." required maxlength="5000"></textarea>
           </div>
+          <div class="form-group" style="margin-top: 1rem;">
+            <div
+              class="cf-turnstile"
+              data-sitekey="0x4AAAAAAD8rfmjtRjNqTJQ6"
+              data-theme="light"
+              data-action="contact"
+            ></div>
+          </div>
           <button type="submit" class="btn-solid" id="submit-btn">SEND MESSAGE</button>
         </form>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
       </div>
     </div>
   </section>
@@ -233,6 +242,17 @@ title: Studio Stonehewer
       const formMessage = document.getElementById('form-message');
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
+      const turnstileToken =
+        data['cf-turnstile-response'] ||
+        (form.querySelector('[name="cf-turnstile-response"]') || {}).value;
+
+      if (!turnstileToken) {
+        formMessage.textContent = 'Please complete the verification challenge.';
+        formMessage.style.backgroundColor = '#fff3cd';
+        formMessage.style.color = '#856404';
+        formMessage.style.display = 'block';
+        return;
+      }
 
       submitBtn.textContent = 'SENDING...';
       submitBtn.disabled = true;
@@ -242,7 +262,10 @@ title: Studio Stonehewer
         const response = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: JSON.stringify({
+            ...data,
+            'cf-turnstile-response': turnstileToken,
+          }),
         });
 
         let result = {};
@@ -254,6 +277,9 @@ title: Studio Stonehewer
 
         if (response.ok) {
           form.reset();
+          if (window.turnstile) {
+            try { window.turnstile.reset(); } catch (_) { /* ignore */ }
+          }
           formMessage.textContent = 'Message sent successfully! We will get back to you soon.';
           formMessage.style.backgroundColor = '#d4edda';
           formMessage.style.color = '#155724';
@@ -263,6 +289,14 @@ title: Studio Stonehewer
           formMessage.style.backgroundColor = '#fff3cd';
           formMessage.style.color = '#856404';
           formMessage.style.display = 'block';
+        } else if (response.status === 403) {
+          formMessage.textContent = result.error || 'Verification failed. Please try again.';
+          formMessage.style.backgroundColor = '#f8d7da';
+          formMessage.style.color = '#721c24';
+          formMessage.style.display = 'block';
+          if (window.turnstile) {
+            try { window.turnstile.reset(); } catch (_) { /* ignore */ }
+          }
         } else {
           throw new Error(result.error || 'Failed to send message');
         }
