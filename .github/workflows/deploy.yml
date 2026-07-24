@@ -63,11 +63,29 @@ jobs:
         working-directory: ./cms
         run: npm ci || npm install
 
-      - name: Deploy CMS Worker
+      - name: Run CMS database migrations
         working-directory: ./cms
-        run: npm run deploy
+        run: npm run deploy:database
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Optional but recommended if the token can access multiple accounts
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # SQLite maintenance only — do not block Worker deploy on D1 API permission gaps
+      - name: Optimize D1 (best-effort)
+        working-directory: ./cms
+        continue-on-error: true
+        run: npm run optimize:d1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy CMS Worker
+        working-directory: ./cms
+        run: npm run deploy:app
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
   deploy-frontend:
     if: github.event_name != 'pull_request'
