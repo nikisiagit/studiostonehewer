@@ -208,11 +208,11 @@ title: Studio Stonehewer
           </div>
           <div class="form-group">
             <label for="name">NAME</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required maxlength="100" autocomplete="name">
+            <input type="text" id="name" name="name" placeholder="Your name" required maxlength="100" autocomplete="off">
           </div>
           <div class="form-group">
             <label for="email">EMAIL</label>
-            <input type="email" id="email" name="email" placeholder="you@email.com" required maxlength="254" autocomplete="email">
+            <input type="email" id="email" name="email" placeholder="you@email.com" required maxlength="254" autocomplete="off">
           </div>
           <div class="form-group">
             <label for="message">MESSAGE</label>
@@ -228,14 +228,33 @@ title: Studio Stonehewer
           </div>
           <button type="submit" class="btn-solid" id="submit-btn">SEND MESSAGE</button>
         </form>
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
       </div>
     </div>
   </section>
 
   <script>
-    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    const contactForm = document.getElementById('contact-form');
+    let turnstileLoaded = false;
+
+    function loadTurnstile() {
+      if (turnstileLoaded) return;
+      turnstileLoaded = true;
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+
+    if (contactForm) {
+      contactForm.addEventListener('focusin', loadTurnstile, { once: true });
+      contactForm.addEventListener('mouseenter', loadTurnstile, { once: true });
+      contactForm.addEventListener('touchstart', loadTurnstile, { once: true });
+    }
+
+    contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
+      loadTurnstile();
 
       const form = this;
       const submitBtn = document.getElementById('submit-btn');
