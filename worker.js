@@ -211,6 +211,29 @@ export default {
       return handleImageTransform(request, url)
     }
 
+    // Avoid noisy 500s when browsers request a missing favicon
+    if (url.pathname === '/favicon.ico') {
+      const assetResponse = await env.ASSETS.fetch(request)
+      if (assetResponse.ok) {
+        const headers = new Headers(assetResponse.headers)
+        for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+          headers.set(key, value)
+        }
+        headers.set('Cache-Control', 'public, max-age=86400')
+        return new Response(assetResponse.body, {
+          status: assetResponse.status,
+          headers,
+        })
+      }
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...SECURITY_HEADERS,
+          'Cache-Control': 'public, max-age=86400',
+        },
+      })
+    }
+
     // Contact Form Endpoint
     if (url.pathname === '/api/contact' && request.method === 'POST') {
       try {

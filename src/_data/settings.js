@@ -1,4 +1,4 @@
-const { fetchJson, sanitizeHref, toPublicMediaUrl } = require('./fetchUtils');
+const { fetchJson, sanitizeHref, resolveMediaUrl } = require('./fetchUtils');
 
 module.exports = async function () {
   const BASE_URL = process.env.PAYLOAD_API_URL || 'http://127.0.0.1:3000';
@@ -17,7 +17,7 @@ module.exports = async function () {
         const [label, url] = line.split('|').map((s) => s.trim());
         return { label, url: sanitizeHref(url, '/') };
       }),
-    nav_logo: '/images/hero-logo.png',
+    nav_logo: '/assets/images/unknown.jpeg',
   };
 
   const data = await fetchJson(API_URL, 'Payload Settings API');
@@ -34,10 +34,7 @@ module.exports = async function () {
     }
     let navLogoUrl = settings.nav_logo;
     if (data.nav_logo && data.nav_logo.url) {
-      const raw = data.nav_logo.url.startsWith('http')
-        ? data.nav_logo.url
-        : `${BASE_URL}${data.nav_logo.url}`;
-      navLogoUrl = toPublicMediaUrl(raw);
+      navLogoUrl = resolveMediaUrl(data.nav_logo.url, BASE_URL) || settings.nav_logo;
     }
 
     settings = {

@@ -1,4 +1,4 @@
-const { fetchJson, sanitizeHref, toPublicMediaUrl } = require('./fetchUtils');
+const { fetchJson, sanitizeHref, resolveMediaUrl } = require('./fetchUtils');
 
 module.exports = async function () {
   const BASE_URL = process.env.PAYLOAD_API_URL || 'http://127.0.0.1:3000';
@@ -12,11 +12,7 @@ module.exports = async function () {
       .filter((item) => item.length > 0);
   };
 
-  const getUrl = (url) => {
-    if (!url) return null;
-    if (url.startsWith('http')) return toPublicMediaUrl(url);
-    return toPublicMediaUrl(`${BASE_URL}${url}`);
-  };
+  const getUrl = (url) => resolveMediaUrl(url, BASE_URL);
 
   const parseGuides = (guidesData) => {
     if (!guidesData) return [];

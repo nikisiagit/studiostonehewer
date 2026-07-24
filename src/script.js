@@ -162,7 +162,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (el.tagName === 'IMG') {
         const next = data[fieldName]?.url;
-        if (typeof next === 'string' && (/^https?:\/\//i.test(next) || next.startsWith('/'))) {
+        if (typeof next !== 'string') return;
+        // Allow relative paths and public https; block loopback so live preview
+        // never injects http://127.0.0.1 into a production-origin tab.
+        const isRelative = next.startsWith('/');
+        let isPublicHttp = false;
+        try {
+          if (/^https?:\/\//i.test(next)) {
+            const host = new URL(next).hostname.toLowerCase();
+            isPublicHttp =
+              host !== 'localhost' &&
+              host !== '127.0.0.1' &&
+              host !== '::1' &&
+              host !== '[::1]';
+          }
+        } catch {
+          isPublicHttp = false;
+        }
+        if (isRelative || isPublicHttp) {
           el.src = next;
         }
       } else if (typeof data[fieldName] === 'string' || typeof data[fieldName] === 'number') {

@@ -23,6 +23,16 @@ module.exports = function (eleventyConfig) {
     const options = `width=${w},quality=${q},format=auto,fit=scale-down`;
 
     if (/^https?:\/\//i.test(url)) {
+      try {
+        const host = new URL(url).hostname.toLowerCase();
+        // Never send loopback hosts through the image worker (or into HTML)
+        if (host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "[::1]") {
+          const pathOnly = new URL(url).pathname;
+          return pathOnly || url;
+        }
+      } catch {
+        /* fall through */
+      }
       // Served by worker.js handleImageTransform → cf.image
       return `/_img/${options}/${url}`;
     }

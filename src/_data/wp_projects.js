@@ -1,9 +1,10 @@
-const { fetchJson, toPublicMediaUrl } = require('./fetchUtils');
+const { fetchJson, resolveMediaUrl } = require('./fetchUtils');
 
 module.exports = async function () {
   const BASE_URL = process.env.PAYLOAD_API_URL || 'http://127.0.0.1:3000';
   const API_URL = `${BASE_URL}/api/projects?limit=100`;
 
+  // Fallbacks use public CDN / local static assets only — never localhost.
   let rawProjects = [
     {
       title: 'Oud-West',
@@ -15,11 +16,14 @@ module.exports = async function () {
       intro_text_2:
         'We used a mix of old, vintage elements and playful fabrics with a variety of textures alongside new, timeless pieces. The apartment now tells a story of both classic elegance and fresh youth.',
       gallery: [
-        { image: { url: '/assets/images/project-1-1.jpeg' }, size: 'tall' },
-        { image: { url: '/assets/images/project-1-2.jpeg' }, size: 'regular' },
-        { image: { url: '/assets/images/project-1-3.jpeg' }, size: 'wide' },
-        { image: { url: '/assets/images/project-1-4.jpeg' }, size: 'regular' },
-        { image: { url: '/assets/images/project-1-5.jpeg' }, size: 'tall' },
+        {
+          image: { url: 'https://media.studiostonehewer.co.uk/oud-west-bedroom-pink-1.jpg' },
+          size: 'tall',
+        },
+        { image: { url: '/assets/images/unknown.jpeg' }, size: 'regular' },
+        { image: { url: '/assets/images/unknown.jpeg' }, size: 'wide' },
+        { image: { url: '/assets/images/unknown.jpeg' }, size: 'regular' },
+        { image: { url: '/assets/images/unknown.jpeg' }, size: 'tall' },
       ],
     },
     {
@@ -32,8 +36,11 @@ module.exports = async function () {
       intro_text_2:
         'By introducing soft textiles, warm wood tones, and residential-style lighting, we transformed the clinical office into a welcoming studio environment.',
       gallery: [
-        { image: { url: '/assets/images/project-2-1.jpeg' }, size: 'wide' },
-        { image: { url: '/assets/images/project-2-2.jpeg' }, size: 'tall' },
+        {
+          image: { url: 'https://media.studiostonehewer.co.uk/poole-dorset-apartment.jpeg' },
+          size: 'wide',
+        },
+        { image: { url: '/assets/images/unknown.jpeg' }, size: 'tall' },
       ],
     },
   ];
@@ -43,11 +50,7 @@ module.exports = async function () {
     rawProjects = data.docs;
   }
 
-  const getUrl = (url) => {
-    if (!url) return null;
-    if (url.startsWith('http')) return toPublicMediaUrl(url);
-    return toPublicMediaUrl(`${BASE_URL}${url}`);
-  };
+  const getUrl = (url) => resolveMediaUrl(url, BASE_URL);
 
   const transformedProjects = rawProjects.map((post) => {
     const slug = post.title

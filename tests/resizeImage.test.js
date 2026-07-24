@@ -40,6 +40,15 @@ describe('resizeImage filter', () => {
     assert.equal(resizeImage('/assets/images/x.png', 400, 80), '/assets/images/x.png')
   })
 
+  it('strips loopback hosts instead of wrapping them', () => {
+    delete process.env.DISABLE_CF_IMAGE_RESIZE
+    const resizeImage = loadResizeFilter()
+    assert.equal(
+      resizeImage('http://127.0.0.1:3000/assets/images/project-1-1.jpeg', 800, 80),
+      '/assets/images/project-1-1.jpeg',
+    )
+  })
+
   it('can be disabled via env', () => {
     process.env.DISABLE_CF_IMAGE_RESIZE = '1'
     const resizeImage = loadResizeFilter()
